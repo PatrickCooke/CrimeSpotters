@@ -13,6 +13,14 @@
 		43171DC31CDBB65F0034021F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43171DC11CDBB65F0034021F /* Main.storyboard */; };
 		43171DC51CDBB65F0034021F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43171DC41CDBB65F0034021F /* Assets.xcassets */; };
 		43171DC81CDBB65F0034021F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43171DC61CDBB65F0034021F /* LaunchScreen.storyboard */; };
+		43171DD01CDBB69E0034021F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43171DCF1CDBB69E0034021F /* MapKit.framework */; };
+		43171DD31CDBB7470034021F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DD21CDBB7470034021F /* Reachability.m */; };
+		43171DD51CDBC21D0034021F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43171DD41CDBC21D0034021F /* SystemConfiguration.framework */; };
+		43171DD81CDBC8C80034021F /* PoliceStations.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DD71CDBC8C80034021F /* PoliceStations.m */; };
+		43171DDB1CDBDF250034021F /* LiquorStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DDA1CDBDF250034021F /* LiquorStore.m */; };
+		43171DDE1CDCDA680034021F /* BarsRestaurants.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DDD1CDCDA680034021F /* BarsRestaurants.m */; };
+		43171DE11CDCEBB40034021F /* MyPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DE01CDCEBB40034021F /* MyPointAnnotation.m */; };
+		43171DE41CDCFC760034021F /* Crime.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DE31CDCFC760034021F /* Crime.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +34,20 @@
 		43171DC41CDBB65F0034021F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43171DC71CDBB65F0034021F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		43171DC91CDBB65F0034021F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		43171DCF1CDBB69E0034021F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		43171DD11CDBB7470034021F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		43171DD21CDBB7470034021F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		43171DD41CDBC21D0034021F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		43171DD61CDBC8C80034021F /* PoliceStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PoliceStations.h; sourceTree = "<group>"; };
+		43171DD71CDBC8C80034021F /* PoliceStations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PoliceStations.m; sourceTree = "<group>"; };
+		43171DD91CDBDF250034021F /* LiquorStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiquorStore.h; sourceTree = "<group>"; };
+		43171DDA1CDBDF250034021F /* LiquorStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LiquorStore.m; sourceTree = "<group>"; };
+		43171DDC1CDCDA680034021F /* BarsRestaurants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarsRestaurants.h; sourceTree = "<group>"; };
+		43171DDD1CDCDA680034021F /* BarsRestaurants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarsRestaurants.m; sourceTree = "<group>"; };
+		43171DDF1CDCEBB40034021F /* MyPointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyPointAnnotation.h; sourceTree = "<group>"; };
+		43171DE01CDCEBB40034021F /* MyPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPointAnnotation.m; sourceTree = "<group>"; };
+		43171DE21CDCFC760034021F /* Crime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crime.h; sourceTree = "<group>"; };
+		43171DE31CDCFC760034021F /* Crime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crime.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +55,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43171DD51CDBC21D0034021F /* SystemConfiguration.framework in Frameworks */,
+				43171DD01CDBB69E0034021F /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -42,6 +66,8 @@
 		43171DAC1CDBB65F0034021F = {
 			isa = PBXGroup;
 			children = (
+				43171DD41CDBC21D0034021F /* SystemConfiguration.framework */,
+				43171DCF1CDBB69E0034021F /* MapKit.framework */,
 				43171DB71CDBB65F0034021F /* CrimeSpotters */,
 				43171DB61CDBB65F0034021F /* Products */,
 			);
@@ -62,7 +88,19 @@
 				43171DBC1CDBB65F0034021F /* AppDelegate.m */,
 				43171DBE1CDBB65F0034021F /* ViewController.h */,
 				43171DBF1CDBB65F0034021F /* ViewController.m */,
+				43171DD61CDBC8C80034021F /* PoliceStations.h */,
+				43171DD71CDBC8C80034021F /* PoliceStations.m */,
+				43171DD91CDBDF250034021F /* LiquorStore.h */,
+				43171DDA1CDBDF250034021F /* LiquorStore.m */,
+				43171DE21CDCFC760034021F /* Crime.h */,
+				43171DE31CDCFC760034021F /* Crime.m */,
+				43171DDC1CDCDA680034021F /* BarsRestaurants.h */,
+				43171DDD1CDCDA680034021F /* BarsRestaurants.m */,
+				43171DDF1CDCEBB40034021F /* MyPointAnnotation.h */,
+				43171DE01CDCEBB40034021F /* MyPointAnnotation.m */,
 				43171DC11CDBB65F0034021F /* Main.storyboard */,
+				43171DD11CDBB7470034021F /* Reachability.h */,
+				43171DD21CDBB7470034021F /* Reachability.m */,
 				43171DC41CDBB65F0034021F /* Assets.xcassets */,
 				43171DC61CDBB65F0034021F /* LaunchScreen.storyboard */,
 				43171DC91CDBB65F0034021F /* Info.plist */,
@@ -151,8 +189,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				43171DC01CDBB65F0034021F /* ViewController.m in Sources */,
+				43171DE11CDCEBB40034021F /* MyPointAnnotation.m in Sources */,
 				43171DBD1CDBB65F0034021F /* AppDelegate.m in Sources */,
+				43171DD81CDBC8C80034021F /* PoliceStations.m in Sources */,
+				43171DD31CDBB7470034021F /* Reachability.m in Sources */,
 				43171DBA1CDBB65F0034021F /* main.m in Sources */,
+				43171DE41CDCFC760034021F /* Crime.m in Sources */,
+				43171DDE1CDCDA680034021F /* BarsRestaurants.m in Sources */,
+				43171DDB1CDBDF250034021F /* LiquorStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +310,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CrimeSpotters/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.thepatrickcooke.CrimeSpotters;
@@ -277,6 +322,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CrimeSpotters/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.thepatrickcooke.CrimeSpotters;
