@@ -10,18 +10,22 @@
 #import "Reachability.h"
 #import "PoliceStations.h"
 #import "LiquorStore.h"
+#import "Crime.h"
 #import "BarsRestaurants.h"
 #import "MyPointAnnotation.h"
+#import "MyCircle.h"
 #import <MapKit/MapKit.h>
 
 @interface ViewController ()
 
-@property (nonatomic, strong)         NSString         *hostName;
-@property (nonatomic, strong)         NSMutableArray   *policeArray;
-@property (nonatomic, weak)  IBOutlet MKMapView        *mapView;
-@property (nonatomic, strong)         NSMutableArray   *lStoreArray;
-@property (nonatomic, strong)         NSMutableArray   *barsArray;
-@property (nonatomic, strong)         NSMutableArray   *crimeArray;
+@property (nonatomic, strong)         NSString           *hostName;
+@property (nonatomic, strong)         NSMutableArray     *policeArray;
+@property (nonatomic, weak)  IBOutlet MKMapView          *mapView;
+@property (nonatomic, strong)         NSMutableArray     *lStoreArray;
+@property (nonatomic, strong)         NSMutableArray     *barsArray;
+@property (nonatomic, strong)         NSMutableArray     *crimeArray;
+@property (nonatomic, weak)  IBOutlet UIView             *menuView;
+@property (nonatomic, weak) IBOutlet  NSLayoutConstraint *insideMenuConstant;
 
 @end
 
@@ -37,6 +41,11 @@ bool serverAvailable;
 bool policePinsOff = true;
 bool barPinsoff = true;
 bool lStorePinsoff = true;
+bool crimePinsoff = true;
+bool menuhidden = true;
+bool assaultPinsOff = true;
+bool murderPinsoOff = true;
+bool drunkPinsOff = true;
 
 
 #pragma mark - Pull Police Data
@@ -193,13 +202,13 @@ bool lStorePinsoff = true;
 
 #pragma mark - Crime info pull
 //https://data.detroitmi.gov/resource/i9ph-uyrp.json
-- (IBAction)getCrime:(id)sender {
-    [self getCrimeInfo];
-}
+//- (IBAction)getCrime:(id)sender {
+//    [self getCrimeInfo];
+//}
 - (void)getCrimeInfo {
     if (serverAvailable) {
         NSLog(@"Server Available");
-        NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/i9ph-uyrp.json?stateoffensefileclass=42000", _hostName]];
+        NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/i9ph-uyrp.json?$limit=10000&$$app_token=SiWSm0v7gKl8NxUd7vZCJQkzP", _hostName]];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:fileURL];
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
@@ -210,7 +219,30 @@ bool lStorePinsoff = true;
             NSLog(@"Got Response");
             if (([data length] > 0) && (error == nil)) {
                 NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-                NSLog(@"Got jSON %@", json);
+                //NSLog(@"Got jSON %@", json);
+                [_crimeArray removeAllObjects];
+                NSArray *tempArray = (NSArray *)json;
+                for (NSDictionary *crime in tempArray) {
+                    NSString *category = [crime objectForKey:@"category"];
+                    NSString *crimeCode = [crime objectForKey:@"stateoffensefileclass"];
+                    NSDictionary *coordDict = [crime objectForKey:@"location"];
+                    NSArray *coords = [coordDict objectForKey:@"coordinates"];
+                    NSString *lat = coords[1];
+                    NSString *lon = coords[0];
+                    //NSLog(@"code -  %@, lat:%@, lon:%@", crimeCode, lat, lon);
+                    
+                    Crime *newCrime = [[Crime alloc] initWithCategory:category andCrimeClass:crimeCode andLat:lat andLon:lon];
+                    [_crimeArray addObject:newCrime];
+                }
+                NSMutableArray *discardedItems = [NSMutableArray array];
+                
+                for (Crime *loc in _crimeArray) {
+                    if (loc.lat == 0) [discardedItems addObject:loc];
+                    if ([loc.lat floatValue] > 90) [discardedItems addObject:loc];
+                }
+                
+                [_crimeArray removeObjectsInArray:discardedItems];
+                NSLog(@"total crimes %li", _crimeArray.count);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"dataRcvMsg" object:nil];
                 });
@@ -222,6 +254,24 @@ bool lStorePinsoff = true;
 
 
 #pragma mark - Interactivity Methods
+
+-(IBAction)showHideMenu:(id)sender {
+    if (!_menuView.hidden) {
+        menuhidden = false;
+        [UIView animateWithDuration:1.0 animations:^{
+            [_menuView setAlpha:0.0];
+            [self.view layoutIfNeeded];
+            [_menuView setHidden:true];
+        }];
+    } else {
+        menuhidden = true;
+        [UIView animateWithDuration:1.0 animations:^{
+            [_menuView setAlpha:1.0];
+            [_menuView setHidden:false];
+            [self.view layoutIfNeeded];
+        }];
+    }
+}
 
 - (IBAction)PolicePins:(id)sender {
     if (policePinsOff){
@@ -244,11 +294,37 @@ bool lStorePinsoff = true;
     }
 }
 
+- (IBAction)ShowMurder:(id)sender {
+    if (murderPinsoOff) {
+        murderPinsoOff=false;
+        [self annotateMurderLocations];
+    }
+
+}
+- (IBAction)ShowDrunkenness:(id)sender {
+    if (drunkPinsOff) {
+        drunkPinsOff=false;
+        [self annotateDrunkennessLocations];
+    }
+    
+}
+- (IBAction)ShowAssault:(id)sender {
+    if (assaultPinsOff) {
+        assaultPinsOff=false;
+        [self annotateAssaultLocations];
+    }
+    
+}
+
 - (IBAction)removePins:(id)sender {
     barPinsoff = true;
     lStorePinsoff = true;
     policePinsOff = true;
+    murderPinsoOff = true;
+    drunkPinsOff = true;
+    assaultPinsOff = true;
     [self removeAllPins];
+    [self removecircles];
 
 }
 
@@ -257,6 +333,13 @@ bool lStorePinsoff = true;
 - (void)zoomToPins {
     [_mapView showAnnotations:[_mapView annotations] animated:true];
 }
+-(void) removecircles {
+    NSMutableArray *circlesToRemove = [[NSMutableArray alloc] init];
+    for (id <MKOverlay> annot in [_mapView annotations]) {
+        [circlesToRemove addObject:annot];
+    }
+}
+
 
 - (void)removeAllPins {
     NSMutableArray *pinsToRemove = [[NSMutableArray alloc] init];
@@ -270,14 +353,22 @@ bool lStorePinsoff = true;
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
     if ([overlay isKindOfClass:[MKCircle class]]) {
+        MyCircle *circle = (MyCircle *)overlay;
         MKCircleRenderer *renderer = [[MKCircleRenderer alloc]initWithOverlay:overlay];
-        [renderer setFillColor:[UIColor blueColor]];
-        [renderer setAlpha:0.2];
+        
+//        if ([circle.circleType isEqualToString:@"police"]) {
+            [renderer setFillColor:[UIColor blueColor]];
+            [renderer setAlpha:0.2];
+//        } else if ([circle.circleType isEqualToString: @"crime"]) {
+//            [renderer setFillColor:[UIColor darkGrayColor]];
+//            [renderer setAlpha:0.6];
+//        } else if ([circle.circleType isEqualToString:@""]) {
+//            [renderer setFillColor:[UIColor lightGrayColor]];
+//            [renderer setAlpha:0.1];
+//        }
+
         return renderer;
-    } else if ([overlay isKindOfClass:[MKPolygon class]]) {
-        MKPolygonRenderer *pRenderer = [[MKPolygonRenderer alloc] initWithOverlay:overlay];
-        [pRenderer setFillColor: [UIColor orangeColor]];
-        [pRenderer setAlpha: 0.1];
+
     }
     return nil;
 }
@@ -292,13 +383,17 @@ bool lStorePinsoff = true;
         pinView.animatesDrop = false;
         MyPointAnnotation *annot = (MyPointAnnotation *)annotation;
         if ([annot.pinType isEqualToString:@"lStore"]) {
-            pinView.pinTintColor = [UIColor grayColor];
-            pinView.alpha = 0.2;
+            pinView.pinTintColor = [UIColor greenColor];
+            pinView.alpha = 0.5;
         } else if ([annot.pinType isEqualToString:@"police"]){
             pinView.pinTintColor = [UIColor blueColor];
+            pinView.alpha = 1.0;
         } else if ([annot.pinType isEqualToString:@"bar"]){
             pinView.pinTintColor = [UIColor orangeColor];
-            pinView.alpha = .5;
+            pinView.alpha = 0.5;
+        } else if ([annot.pinType isEqualToString:@"crime"]){
+            pinView.pinTintColor = [UIColor darkGrayColor];
+            pinView.alpha = 0.5;
         }
         return pinView;
     }
@@ -317,8 +412,10 @@ bool lStorePinsoff = true;
         pa1.pinType = @"police";
         [_mapView addAnnotation:pa1];
         
-        MKCircle *cirlce = [MKCircle circleWithCenterCoordinate:pa1.coordinate radius:500];
+        
+        MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:3000];
         [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
+        cirlce.circleType=@"police";
     }
     
     [self zoomToPins];
@@ -351,6 +448,51 @@ bool lStorePinsoff = true;
         [_mapView addAnnotation:pa1];
     }
     
+    [self zoomToPins];
+}
+
+#pragma mark - Crime Methods
+- (void)annotateMurderLocations {
+    for (Crime *loc in _crimeArray) {
+        if ([loc.crimeClass isEqualToString:@"09001"] || [loc.crimeClass isEqualToString:@"09002"] || [loc.crimeClass isEqualToString:@"09003"] ||[loc.crimeClass isEqualToString:@"09004"]) {
+            CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
+            MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
+            pa1.coordinate = coord;
+            pa1.title = loc.category;
+            pa1.subtitle = loc.crimeClass;
+            pa1.pinType = @"crime";
+            [_mapView addAnnotation:pa1];
+        }
+    }
+    [self zoomToPins];
+}
+- (void)annotateDrunkennessLocations {
+    for (Crime *loc in _crimeArray) {
+        if ([loc.crimeClass isEqualToString:@"42000"] || [loc.crimeClass isEqualToString:@"53001"]) {
+            CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
+            MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
+            pa1.coordinate = coord;
+            pa1.title = loc.category;
+            pa1.subtitle = loc.crimeClass;
+            pa1.pinType = @"crime";
+            [_mapView addAnnotation:pa1];
+        }
+    }
+    [self zoomToPins];
+}
+
+- (void)annotateAssaultLocations {
+    for (Crime *loc in _crimeArray) {
+        if ([loc.crimeClass isEqualToString:@"13001"] || [loc.crimeClass isEqualToString:@"53001"]) {
+            CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
+            MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
+            pa1.coordinate = coord;
+            pa1.title = loc.category;
+            pa1.subtitle = loc.crimeClass;
+            pa1.pinType = @"crime";
+            [_mapView addAnnotation:pa1];
+        }
+    }
     [self zoomToPins];
 }
 
@@ -405,6 +547,9 @@ bool lStorePinsoff = true;
     if (_barsArray.count == 0 || _barsArray == nil) {
         [self getBarRestaurantsInfo];
     }
+    if (_crimeArray.count == 0 || _crimeArray == nil) {
+        [self getCrimeInfo];
+    }
 }
 
 -(void)searchResultRecv:(NSNotification *)notification {
@@ -431,6 +576,7 @@ bool lStorePinsoff = true;
     _policeArray = [[NSMutableArray alloc] init];
     _lStoreArray = [[NSMutableArray alloc] init];
     _barsArray = [[NSMutableArray alloc] init];
+    _crimeArray = [[NSMutableArray alloc] init];
 
 }
 

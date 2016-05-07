@@ -21,6 +21,7 @@
 		43171DDE1CDCDA680034021F /* BarsRestaurants.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DDD1CDCDA680034021F /* BarsRestaurants.m */; };
 		43171DE11CDCEBB40034021F /* MyPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DE01CDCEBB40034021F /* MyPointAnnotation.m */; };
 		43171DE41CDCFC760034021F /* Crime.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DE31CDCFC760034021F /* Crime.m */; };
+		43171DEA1CDD27110034021F /* MyCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DE91CDD27110034021F /* MyCircle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,8 @@
 		43171DE01CDCEBB40034021F /* MyPointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyPointAnnotation.m; sourceTree = "<group>"; };
 		43171DE21CDCFC760034021F /* Crime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Crime.h; sourceTree = "<group>"; };
 		43171DE31CDCFC760034021F /* Crime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crime.m; sourceTree = "<group>"; };
+		43171DE81CDD27110034021F /* MyCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCircle.h; sourceTree = "<group>"; };
+		43171DE91CDD27110034021F /* MyCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCircle.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +101,8 @@
 				43171DDD1CDCDA680034021F /* BarsRestaurants.m */,
 				43171DDF1CDCEBB40034021F /* MyPointAnnotation.h */,
 				43171DE01CDCEBB40034021F /* MyPointAnnotation.m */,
+				43171DE81CDD27110034021F /* MyCircle.h */,
+				43171DE91CDD27110034021F /* MyCircle.m */,
 				43171DC11CDBB65F0034021F /* Main.storyboard */,
 				43171DD11CDBB7470034021F /* Reachability.h */,
 				43171DD21CDBB7470034021F /* Reachability.m */,
@@ -188,6 +193,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43171DEA1CDD27110034021F /* MyCircle.m in Sources */,
 				43171DC01CDBB65F0034021F /* ViewController.m in Sources */,
 				43171DE11CDCEBB40034021F /* MyPointAnnotation.m in Sources */,
 				43171DBD1CDBB65F0034021F /* AppDelegate.m in Sources */,
