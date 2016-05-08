@@ -10,13 +10,14 @@
 
 @implementation Crime
 
--(id) initWithCategory:(NSString *)category andCrimeClass:(NSString *)crimeClass andLat:(NSString *)lat andLon:(NSString *)lon {
+-(id) initWithCategory:(NSString *)category andCrimeClass:(NSString *)crimeClass andLat:(NSString *)lat andLon:(NSString *)lon andDate:(NSString *)date {
     self = [super init];
     if (self) {
         self.category = category;
         self.crimeClass = crimeClass;
         self.lat = lat;
         self.lon = lon;
+        self.date = date;
     }
     return self;
 }

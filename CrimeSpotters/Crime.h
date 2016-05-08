@@ -14,7 +14,8 @@
 @property (nonatomic, strong) NSString *crimeClass;
 @property (nonatomic, strong) NSString *lat;
 @property (nonatomic, strong) NSString *lon;
+@property (nonatomic, strong) NSString *date;
 
--(id) initWithCategory: (NSString *)category andCrimeClass: (NSString *)crimeClass andLat: (NSString *)lat andLon: (NSString *)lon;
+-(id) initWithCategory: (NSString *)category andCrimeClass: (NSString *)crimeClass andLat: (NSString *)lat andLon: (NSString *)lon andDate:(NSString *)date;
 
 @end

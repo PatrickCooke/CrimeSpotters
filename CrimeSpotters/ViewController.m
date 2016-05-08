@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "Reachability.h"
 #import "PoliceStations.h"
+#import "FireStations.h"
 #import "LiquorStore.h"
 #import "Crime.h"
 #import "BarsRestaurants.h"
@@ -20,6 +21,7 @@
 
 @property (nonatomic, strong)         NSString           *hostName;
 @property (nonatomic, strong)         NSMutableArray     *policeArray;
+@property (nonatomic, strong)         NSMutableArray     *fireArray;
 @property (nonatomic, weak)  IBOutlet MKMapView          *mapView;
 @property (nonatomic, strong)         NSMutableArray     *lStoreArray;
 @property (nonatomic, strong)         NSMutableArray     *barsArray;
@@ -39,6 +41,7 @@ Reachability *wifiReach;
 bool internetAvailable;
 bool serverAvailable;
 bool policePinsOff = true;
+bool firePinsOff = true;
 bool barPinsoff = true;
 bool lStorePinsoff = true;
 bool crimePinsoff = true;
@@ -46,6 +49,7 @@ bool menuhidden = true;
 bool assaultPinsOff = true;
 bool murderPinsoOff = true;
 bool drunkPinsOff = true;
+bool arsonPinsOff = true;
 
 
 #pragma mark - Pull Police Data
@@ -83,6 +87,48 @@ bool drunkPinsOff = true;
                     [_policeArray addObject:newstation];
                 }
                 NSLog(@"Police records %li", _policeArray.count);
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"dataRcvMsg" object:nil];
+                });
+            }}] resume];
+    }
+}
+
+#pragma mark - Pull Fire Station Data
+
+- (void)getFireInfo {
+    NSLog(@"GPI");
+    if (serverAvailable) {
+        NSLog(@"Server Available");
+        NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/hz79-58xh.json?$$app_token=bjp8KrRvAPtuf809u1UXnI0Z8", _hostName]];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:fileURL];
+        [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+        [request setTimeoutInterval:30.0];
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSLog(@"URL searhing: %@",fileURL);
+        [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            NSLog(@"Got Response");
+            if (([data length] > 0) && (error == nil)) {
+                NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                //NSLog(@"Got jSON %@", json);
+                [_fireArray removeAllObjects];
+                NSArray *tempArray = (NSArray *)json;
+                for (NSDictionary *Station in tempArray) {
+                    NSString *station = [Station objectForKey:@"station"];
+                    NSString *Ladder = [Station objectForKey:@"ladder"];
+                    NSDictionary *coordDict = [Station objectForKey:@"full_address"];
+                    NSArray *coords = [coordDict objectForKey:@"coordinates"];
+                    NSString *lat = coords[1];
+                    NSString *lon = coords[0];
+                    NSString *battalion = [Station objectForKey:@"battalion"];
+                    NSString *engine = [Station objectForKey:@"engine"];
+                    //NSLog(@" Station:%@, ladder:%@ lat:%@ lon:%@ battalion:%@, engine:%@",Station, Ladder, lat,lon, battalion, engine);
+                    FireStations *newstation = [[FireStations alloc] initWithStation:station andladder:Ladder andlat:lat andLon:lon andBattalion:battalion andEngine:engine];
+                    [_fireArray addObject:newstation];
+                }
+                NSLog(@"Fire Stations: %li", _fireArray.count);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"dataRcvMsg" object:nil];
@@ -229,9 +275,10 @@ bool drunkPinsOff = true;
                     NSArray *coords = [coordDict objectForKey:@"coordinates"];
                     NSString *lat = coords[1];
                     NSString *lon = coords[0];
-                    //NSLog(@"code -  %@, lat:%@, lon:%@", crimeCode, lat, lon);
-                    
-                    Crime *newCrime = [[Crime alloc] initWithCategory:category andCrimeClass:crimeCode andLat:lat andLon:lon];
+                    NSString *date1 = [crime objectForKey:@"incidentdate"];
+                    NSString *date = [date1 stringByReplacingOccurrencesOfString:@"T00:00:00.000" withString:@""];
+                    //NSLog(@"code -  %@, lat:%@, lon:%@ date %@", crimeCode, lat, lon, date);
+                    Crime *newCrime = [[Crime alloc] initWithCategory:category andCrimeClass:crimeCode andLat:lat andLon:lon andDate:date];
                     [_crimeArray addObject:newCrime];
                 }
                 NSMutableArray *discardedItems = [NSMutableArray array];
@@ -280,6 +327,13 @@ bool drunkPinsOff = true;
     }
 }
 
+- (IBAction)FirePins:(id)sender {
+    if (firePinsOff){
+        firePinsOff=false;
+        [self annotateFireStationLocations];
+    }
+}
+
 - (IBAction)barsPins:(id)sender {
     if (barPinsoff) {
         barPinsoff=false;
@@ -316,13 +370,22 @@ bool drunkPinsOff = true;
     
 }
 
+- (IBAction)ShowArson:(id)sender {
+    if (arsonPinsOff) {
+        arsonPinsOff=false;
+        [self annotateArsonLocations];
+    }
+}
+
 - (IBAction)removePins:(id)sender {
     barPinsoff = true;
     lStorePinsoff = true;
     policePinsOff = true;
+    firePinsOff = true;
     murderPinsoOff = true;
     drunkPinsOff = true;
     assaultPinsOff = true;
+    arsonPinsOff = true;
     [self removeAllPins];
     [self removecircles];
 
@@ -334,9 +397,9 @@ bool drunkPinsOff = true;
     [_mapView showAnnotations:[_mapView annotations] animated:true];
 }
 -(void) removecircles {
-    NSMutableArray *circlesToRemove = [[NSMutableArray alloc] init];
-    for (id <MKOverlay> annot in [_mapView annotations]) {
-        [circlesToRemove addObject:annot];
+    for (id<MKOverlay> overlay in _mapView.overlays)
+    {
+        [self.mapView removeOverlay:overlay];
     }
 }
 
@@ -394,6 +457,12 @@ bool drunkPinsOff = true;
         } else if ([annot.pinType isEqualToString:@"crime"]){
             pinView.pinTintColor = [UIColor darkGrayColor];
             pinView.alpha = 0.5;
+        }else if ([annot.pinType isEqualToString:@"fire"]){
+            pinView.pinTintColor = [UIColor redColor];
+            pinView.alpha = 0.5;
+        }else if ([annot.pinType isEqualToString:@"arson"]){
+            pinView.pinTintColor = [UIColor blackColor];
+            pinView.alpha = 0.5;
         }
         return pinView;
     }
@@ -421,6 +490,20 @@ bool drunkPinsOff = true;
     [self zoomToPins];
 }
 
+#pragma mark - Fire Station methods
+- (void)annotateFireStationLocations {
+    for (FireStations *loc in _fireArray) {
+        MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
+        pa1.coordinate = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
+        //NSLog(@"Lat: %f and Lon: %f", [loc.pLat floatValue], [loc.pLon floatValue]);
+        pa1.title = loc.station;
+        pa1.subtitle = loc.battalion;
+        pa1.pinType = @"fire";
+        [_mapView addAnnotation:pa1];
+    }
+    
+    [self zoomToPins];
+}
 #pragma mark - Lstore map methods
 
 - (void)annotateLStoreLocations {
@@ -459,7 +542,7 @@ bool drunkPinsOff = true;
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
             pa1.title = loc.category;
-            pa1.subtitle = loc.crimeClass;
+            pa1.subtitle = loc.date;
             pa1.pinType = @"crime";
             [_mapView addAnnotation:pa1];
         }
@@ -473,7 +556,7 @@ bool drunkPinsOff = true;
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
             pa1.title = loc.category;
-            pa1.subtitle = loc.crimeClass;
+            pa1.subtitle = loc.date;
             pa1.pinType = @"crime";
             [_mapView addAnnotation:pa1];
         }
@@ -488,8 +571,22 @@ bool drunkPinsOff = true;
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
             pa1.title = loc.category;
-            pa1.subtitle = loc.crimeClass;
+            pa1.subtitle = loc.date;
             pa1.pinType = @"crime";
+            [_mapView addAnnotation:pa1];
+        }
+    }
+    [self zoomToPins];
+}
+- (void)annotateArsonLocations {
+    for (Crime *loc in _crimeArray) {
+        if ([loc.crimeClass isEqualToString:@"20000"]) {
+            CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
+            MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
+            pa1.coordinate = coord;
+            pa1.title = loc.category;
+            pa1.subtitle = loc.date;
+            pa1.pinType = @"arson";
             [_mapView addAnnotation:pa1];
         }
     }
@@ -550,6 +647,9 @@ bool drunkPinsOff = true;
     if (_crimeArray.count == 0 || _crimeArray == nil) {
         [self getCrimeInfo];
     }
+    if (_fireArray.count == 0 || _fireArray == nil) {
+        [self getFireInfo];
+    }
 }
 
 -(void)searchResultRecv:(NSNotification *)notification {
@@ -577,7 +677,7 @@ bool drunkPinsOff = true;
     _lStoreArray = [[NSMutableArray alloc] init];
     _barsArray = [[NSMutableArray alloc] init];
     _crimeArray = [[NSMutableArray alloc] init];
-
+    _fireArray = [[NSMutableArray alloc] init];
 }
 
 - (void)didReceiveMemoryWarning {

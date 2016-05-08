@@ -38,7 +38,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYH-nF-utA">
-                                <rect key="frame" x="20" y="20" width="221" height="245"/>
+                                <rect key="frame" x="20" y="20" width="221" height="315"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A6j-dh-acp">
                                         <rect key="frame" x="8" y="8" width="84" height="25"/>
@@ -108,25 +108,6 @@
                                             <action selector="ShowMurder:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Bip-nb-P42"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gn6-sZ-CZ9">
-                                        <rect key="frame" x="130" y="212" width="78" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="3gQ-Nh-R3O"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="78" id="J4j-pK-YbC"/>
-                                            <constraint firstAttribute="height" constant="25" id="u6J-fe-Xq1"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="Clear Info"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="3gQ-Nh-R3O"/>
-                                                <exclude reference="J4j-pK-YbC"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <action selector="removePins:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OMK-lu-6hP"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1SS-w9-pMa">
                                         <rect key="frame" x="8" y="41" width="72" height="25"/>
                                         <constraints>
@@ -144,6 +125,39 @@
                                             <action selector="barsPins:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xL9-8c-2ft"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QDt-jX-O2x">
+                                        <rect key="frame" x="8" y="212" width="30" height="30"/>
+                                        <state key="normal" title="Fire"/>
+                                        <connections>
+                                            <action selector="FirePins:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ILk-YX-gDq"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9SW-Hz-WEs">
+                                        <rect key="frame" x="12" y="243" width="39" height="30"/>
+                                        <state key="normal" title="arson"/>
+                                        <connections>
+                                            <action selector="ShowArson:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LRQ-n9-8Ib"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gn6-sZ-CZ9">
+                                        <rect key="frame" x="135" y="282" width="78" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="3gQ-Nh-R3O"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="78" id="J4j-pK-YbC"/>
+                                            <constraint firstAttribute="height" constant="25" id="u6J-fe-Xq1"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Clear Info"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="3gQ-Nh-R3O"/>
+                                                <exclude reference="J4j-pK-YbC"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="removePins:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OMK-lu-6hP"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -155,11 +169,11 @@
                                     <constraint firstItem="ywY-mT-3g8" firstAttribute="leading" secondItem="aYH-nF-utA" secondAttribute="leading" constant="8" id="NiB-HC-ffa"/>
                                     <constraint firstAttribute="trailing" secondItem="DNs-re-aRL" secondAttribute="trailing" constant="8" id="NpP-ts-f4N"/>
                                     <constraint firstItem="jxI-eD-HNa" firstAttribute="leading" secondItem="aYH-nF-utA" secondAttribute="leading" constant="8" id="U9b-7F-jCw"/>
-                                    <constraint firstAttribute="trailing" secondItem="gn6-sZ-CZ9" secondAttribute="trailing" constant="13" id="UJ0-Yq-yWc"/>
+                                    <constraint firstAttribute="trailing" secondItem="gn6-sZ-CZ9" secondAttribute="trailing" constant="8" id="UJ0-Yq-yWc"/>
                                     <constraint firstItem="hWd-Pi-GK4" firstAttribute="top" secondItem="DNs-re-aRL" secondAttribute="bottom" id="Vj9-Pr-uba"/>
                                     <constraint firstItem="1SS-w9-pMa" firstAttribute="top" secondItem="aYH-nF-utA" secondAttribute="top" constant="41" id="XBW-ZW-rjQ"/>
                                     <constraint firstItem="DNs-re-aRL" firstAttribute="leading" secondItem="aYH-nF-utA" secondAttribute="leading" constant="8" id="Xzi-tr-80q"/>
-                                    <constraint firstAttribute="height" constant="245" id="Z2I-Nj-MRB"/>
+                                    <constraint firstAttribute="height" constant="315" id="Z2I-Nj-MRB"/>
                                     <constraint firstItem="1SS-w9-pMa" firstAttribute="top" secondItem="A6j-dh-acp" secondAttribute="bottom" constant="8" id="c8O-Ax-qNf"/>
                                     <constraint firstAttribute="bottom" secondItem="gn6-sZ-CZ9" secondAttribute="bottom" constant="8" id="cbT-cm-CCq"/>
                                     <constraint firstAttribute="width" constant="221" id="eu3-Bn-7cJ"/>

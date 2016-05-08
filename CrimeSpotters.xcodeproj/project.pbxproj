@@ -22,6 +22,7 @@
 		43171DE11CDCEBB40034021F /* MyPointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DE01CDCEBB40034021F /* MyPointAnnotation.m */; };
 		43171DE41CDCFC760034021F /* Crime.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DE31CDCFC760034021F /* Crime.m */; };
 		43171DEA1CDD27110034021F /* MyCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DE91CDD27110034021F /* MyCircle.m */; };
+		43171DFB1CDEDF6D0034021F /* FireStations.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DFA1CDEDF6D0034021F /* FireStations.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,8 @@
 		43171DE31CDCFC760034021F /* Crime.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Crime.m; sourceTree = "<group>"; };
 		43171DE81CDD27110034021F /* MyCircle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCircle.h; sourceTree = "<group>"; };
 		43171DE91CDD27110034021F /* MyCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCircle.m; sourceTree = "<group>"; };
+		43171DF91CDEDF6D0034021F /* FireStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireStations.h; sourceTree = "<group>"; };
+		43171DFA1CDEDF6D0034021F /* FireStations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FireStations.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,19 +94,8 @@
 				43171DBC1CDBB65F0034021F /* AppDelegate.m */,
 				43171DBE1CDBB65F0034021F /* ViewController.h */,
 				43171DBF1CDBB65F0034021F /* ViewController.m */,
-				43171DD61CDBC8C80034021F /* PoliceStations.h */,
-				43171DD71CDBC8C80034021F /* PoliceStations.m */,
-				43171DD91CDBDF250034021F /* LiquorStore.h */,
-				43171DDA1CDBDF250034021F /* LiquorStore.m */,
-				43171DE21CDCFC760034021F /* Crime.h */,
-				43171DE31CDCFC760034021F /* Crime.m */,
-				43171DDC1CDCDA680034021F /* BarsRestaurants.h */,
-				43171DDD1CDCDA680034021F /* BarsRestaurants.m */,
-				43171DDF1CDCEBB40034021F /* MyPointAnnotation.h */,
-				43171DE01CDCEBB40034021F /* MyPointAnnotation.m */,
-				43171DE81CDD27110034021F /* MyCircle.h */,
-				43171DE91CDD27110034021F /* MyCircle.m */,
 				43171DC11CDBB65F0034021F /* Main.storyboard */,
+				43171DFC1CDEE50C0034021F /* data */,
 				43171DD11CDBB7470034021F /* Reachability.h */,
 				43171DD21CDBB7470034021F /* Reachability.m */,
 				43171DC41CDBB65F0034021F /* Assets.xcassets */,
@@ -120,6 +112,27 @@
 				43171DB91CDBB65F0034021F /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		43171DFC1CDEE50C0034021F /* data */ = {
+			isa = PBXGroup;
+			children = (
+				43171DD61CDBC8C80034021F /* PoliceStations.h */,
+				43171DD71CDBC8C80034021F /* PoliceStations.m */,
+				43171DF91CDEDF6D0034021F /* FireStations.h */,
+				43171DFA1CDEDF6D0034021F /* FireStations.m */,
+				43171DD91CDBDF250034021F /* LiquorStore.h */,
+				43171DDA1CDBDF250034021F /* LiquorStore.m */,
+				43171DE21CDCFC760034021F /* Crime.h */,
+				43171DE31CDCFC760034021F /* Crime.m */,
+				43171DDC1CDCDA680034021F /* BarsRestaurants.h */,
+				43171DDD1CDCDA680034021F /* BarsRestaurants.m */,
+				43171DDF1CDCEBB40034021F /* MyPointAnnotation.h */,
+				43171DE01CDCEBB40034021F /* MyPointAnnotation.m */,
+				43171DE81CDD27110034021F /* MyCircle.h */,
+				43171DE91CDD27110034021F /* MyCircle.m */,
+			);
+			name = data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +215,7 @@
 				43171DBA1CDBB65F0034021F /* main.m in Sources */,
 				43171DE41CDCFC760034021F /* Crime.m in Sources */,
 				43171DDE1CDCDA680034021F /* BarsRestaurants.m in Sources */,
+				43171DFB1CDEDF6D0034021F /* FireStations.m in Sources */,
 				43171DDB1CDBDF250034021F /* LiquorStore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +369,7 @@
 				43171DCE1CDBB65F0034021F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
