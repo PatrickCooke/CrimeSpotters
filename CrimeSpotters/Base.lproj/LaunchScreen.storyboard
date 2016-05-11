@@ -27,23 +27,21 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Using data from the Oportunty Project to discover Detroit" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="egv-er-S6T">
-                                <rect key="frame" x="20" y="289" width="560" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="ij7-IJ-3h2"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Using data from the Oportunty Project to discover Detroit" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BY9-g5-HoM">
+                                <rect key="frame" x="20" y="235" width="560" height="129"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="egv-er-S6T" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="KVK-am-SHd"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="egv-er-S6T" secondAttribute="leading" id="OjV-aR-JqK"/>
                             <constraint firstItem="pJ8-TC-uzs" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="QhI-Tg-PDd"/>
-                            <constraint firstItem="egv-er-S6T" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="i9Q-Ys-cHi"/>
-                            <constraint firstItem="egv-er-S6T" firstAttribute="top" secondItem="pJ8-TC-uzs" secondAttribute="bottom" constant="68" id="prw-Gb-g0g"/>
+                            <constraint firstItem="BY9-g5-HoM" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ThN-Hg-xTM"/>
+                            <constraint firstItem="BY9-g5-HoM" firstAttribute="top" secondItem="pJ8-TC-uzs" secondAttribute="bottom" constant="14" id="WCT-6g-QtT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BY9-g5-HoM" secondAttribute="trailing" id="Yng-HY-4Z5"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="BY9-g5-HoM" secondAttribute="leading" id="cDV-Oz-CFi"/>
+                            <constraint firstItem="pJ8-TC-uzs" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="159" id="wf6-Wo-yct"/>
                         </constraints>
                     </view>
                 </viewController>
