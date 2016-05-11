@@ -11,7 +11,6 @@
 		43171DBD1CDBB65F0034021F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DBC1CDBB65F0034021F /* AppDelegate.m */; };
 		43171DC01CDBB65F0034021F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DBF1CDBB65F0034021F /* ViewController.m */; };
 		43171DC31CDBB65F0034021F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43171DC11CDBB65F0034021F /* Main.storyboard */; };
-		43171DC51CDBB65F0034021F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43171DC41CDBB65F0034021F /* Assets.xcassets */; };
 		43171DC81CDBB65F0034021F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43171DC61CDBB65F0034021F /* LaunchScreen.storyboard */; };
 		43171DD01CDBB69E0034021F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43171DCF1CDBB69E0034021F /* MapKit.framework */; };
 		43171DD31CDBB7470034021F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DD21CDBB7470034021F /* Reachability.m */; };
@@ -23,6 +22,7 @@
 		43171DE41CDCFC760034021F /* Crime.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DE31CDCFC760034021F /* Crime.m */; };
 		43171DEA1CDD27110034021F /* MyCircle.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DE91CDD27110034021F /* MyCircle.m */; };
 		43171DFB1CDEDF6D0034021F /* FireStations.m in Sources */ = {isa = PBXBuildFile; fileRef = 43171DFA1CDEDF6D0034021F /* FireStations.m */; };
+		43171DFE1CDF86150034021F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 43171DFD1CDF86150034021F /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +33,6 @@
 		43171DBE1CDBB65F0034021F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		43171DBF1CDBB65F0034021F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		43171DC21CDBB65F0034021F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		43171DC41CDBB65F0034021F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		43171DC71CDBB65F0034021F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		43171DC91CDBB65F0034021F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43171DCF1CDBB69E0034021F /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -54,6 +53,7 @@
 		43171DE91CDD27110034021F /* MyCircle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCircle.m; sourceTree = "<group>"; };
 		43171DF91CDEDF6D0034021F /* FireStations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FireStations.h; sourceTree = "<group>"; };
 		43171DFA1CDEDF6D0034021F /* FireStations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FireStations.m; sourceTree = "<group>"; };
+		43171DFD1CDF86150034021F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +98,9 @@
 				43171DFC1CDEE50C0034021F /* data */,
 				43171DD11CDBB7470034021F /* Reachability.h */,
 				43171DD21CDBB7470034021F /* Reachability.m */,
-				43171DC41CDBB65F0034021F /* Assets.xcassets */,
 				43171DC61CDBB65F0034021F /* LaunchScreen.storyboard */,
 				43171DC91CDBB65F0034021F /* Info.plist */,
+				43171DFD1CDF86150034021F /* Assets.xcassets */,
 				43171DB81CDBB65F0034021F /* Supporting Files */,
 			);
 			path = CrimeSpotters;
@@ -194,7 +194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				43171DC81CDBB65F0034021F /* LaunchScreen.storyboard in Resources */,
-				43171DC51CDBB65F0034021F /* Assets.xcassets in Resources */,
+				43171DFE1CDF86150034021F /* Assets.xcassets in Resources */,
 				43171DC31CDBB65F0034021F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -25,6 +25,7 @@
 @property (nonatomic, weak)  IBOutlet MKMapView          *mapView;
 @property (nonatomic, strong)         NSMutableArray     *lStoreArray;
 @property (nonatomic, strong)         NSMutableArray     *barsArray;
+@property (nonatomic, strong)         NSMutableArray     *sClubArray;
 @property (nonatomic, strong)         NSMutableArray     *crimeArray;
 @property (nonatomic, weak)  IBOutlet UIView             *menuView;
 @property (nonatomic, weak) IBOutlet  NSLayoutConstraint *insideMenuConstant;
@@ -44,8 +45,10 @@ bool policePinsOff = true;
 bool firePinsOff = true;
 bool barPinsoff = true;
 bool lStorePinsoff = true;
+bool stripClubPinsOff = true;
 bool crimePinsoff = true;
-bool menuhidden = true;
+bool menuhidden = false;
+bool aggassaultPinsOff = true;
 bool assaultPinsOff = true;
 bool murderPinsoOff = true;
 bool drunkPinsOff = true;
@@ -176,7 +179,7 @@ bool arsonPinsOff = true;
                 NSMutableArray *discardedItems = [NSMutableArray array];
                 
                 for (LiquorStore *loc in _lStoreArray) {
-                    if ([loc.permitType containsString:@"FOOD"]) [discardedItems addObject:loc];
+                    if ([loc.permitType containsString:@"ADDBAR"] || [loc.permitType containsString:@"TLESSACT"] || [loc.permitType containsString:@"FOOD" ] || [loc.name containsString:@"PUB"] || [loc.permitType containsString:@"OD-SERV"] || [loc.name containsString:@"RESTAURANT"] || [loc.name containsString:@"LOUNGE"]) [discardedItems addObject:loc];
                     if (loc.Lat == 0) [discardedItems addObject:loc];
                 }
                 
@@ -230,7 +233,7 @@ bool arsonPinsOff = true;
                 NSMutableArray *discardedItems = [NSMutableArray array];
                 
                 for (BarsRestaurants *loc in _barsArray) {
-                    if (![loc.permitType containsString:@"FOOD"]) [discardedItems addObject:loc];
+                    if (![loc.permitType containsString:@"ADDBAR"] && ![loc.permitType containsString:@"FOOD"] && ![loc.name containsString:@"PUB"] && /*[loc.permitType containsString:@"OD-SERV"] &&*/ ![loc.name containsString:@"RESTAURANT"] && ![loc.name containsString:@"LOUNGE"]) [discardedItems addObject:loc];
                     if (loc.Lat == 0) [discardedItems addObject:loc];
                 }
                 
@@ -245,6 +248,61 @@ bool arsonPinsOff = true;
           ] resume];
     }
 }
+
+#pragma mark - Strip Clubs Data
+
+- (void)getStripClubInfo {
+    if (serverAvailable) {
+        NSLog(@"Server Available");
+        NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/djd8-sm8q.json", _hostName]];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:fileURL];
+        [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+        [request setTimeoutInterval:30.0];
+        NSURLSession *session = [NSURLSession sharedSession];
+        NSLog(@"URL searhing: %@",fileURL);
+        [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            NSLog(@"Got Response");
+            if (([data length] > 0) && (error == nil)) {
+                NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                //NSLog(@"Got jSON %@", json);
+                [_sClubArray removeAllObjects];
+                NSArray *tempArray = (NSArray *)json;
+                for (NSDictionary *store in tempArray) {
+                    NSString *permittype = [store objectForKey:@"permit_type"];
+                    NSString *name = [store objectForKey:@"name"];
+                    NSDictionary *coordDict = [store objectForKey:@"full_address_value"];
+                    NSArray *coords = [coordDict objectForKey:@"coordinates"];
+                    NSString *lat = coords[1];
+                    NSString *lon = coords[0];
+                    NSString *street = [store objectForKey:@"full_address_value_address"];
+                    NSString *city = [store objectForKey:@"full_address_value_city"];
+                    NSString *zip = [store objectForKey:@"full_address_value_zip"];
+                    NSString *active = [store objectForKey:@"active"];
+                    //NSLog(@"permit - %@, name -  %@, lat:%@, lon:%@, street address %@, city %@, zip %@, active %@", permittype, name, lat, lon, street, city, zip, active);
+                    
+                    BarsRestaurants *newstore = [[BarsRestaurants alloc] initWithName:name andpermitType:permittype andLat:lat andlon:lon andaddress:street andcity:city andzip:zip andactive:active];
+                    [_sClubArray addObject:newstore];
+                }
+                NSMutableArray *discardedItems = [NSMutableArray array];
+                
+                for (BarsRestaurants *loc in _sClubArray) {
+                    if (![loc.permitType containsString:@"TLESSACT"]) [discardedItems addObject:loc];
+                    if (loc.Lat == 0) [discardedItems addObject:loc];
+                }
+                
+                [_sClubArray removeObjectsInArray:discardedItems];
+                NSLog(@"total Strip Clubs %li", _sClubArray.count);
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"dataRcvMsg" object:nil];
+                });
+            }
+        }
+          ] resume];
+    }
+}
+
 
 #pragma mark - Crime info pull
 //https://data.detroitmi.gov/resource/i9ph-uyrp.json
@@ -307,16 +365,18 @@ bool arsonPinsOff = true;
         menuhidden = false;
         [UIView animateWithDuration:1.0 animations:^{
             [_menuView setAlpha:0.0];
+//            [_menuView setHidden:true];
             [self.view layoutIfNeeded];
-            [_menuView setHidden:true];
         }];
-    } else {
+        [_menuView setHidden:true];
+    } else if (_menuView.hidden) {
         menuhidden = true;
         [UIView animateWithDuration:1.0 animations:^{
-            [_menuView setAlpha:1.0];
-            [_menuView setHidden:false];
+            [_menuView setAlpha:0.8];
+//            [_menuView setHidden:false];
             [self.view layoutIfNeeded];
         }];
+        [_menuView setHidden:false];
     }
 }
 
@@ -325,6 +385,7 @@ bool arsonPinsOff = true;
         policePinsOff=false;
         [self annotatePoliceStationLocations];
     }
+    
 }
 
 - (IBAction)FirePins:(id)sender {
@@ -345,6 +406,13 @@ bool arsonPinsOff = true;
     if (lStorePinsoff) {
         lStorePinsoff=false;
         [self annotateLStoreLocations];
+    }
+}
+
+- (IBAction)StripClubPins:(id)sender {
+    if (stripClubPinsOff) {
+        stripClubPinsOff=false;
+        [self annotateStripClubLocations];
     }
 }
 
@@ -370,6 +438,14 @@ bool arsonPinsOff = true;
     
 }
 
+- (IBAction)ShowAggAssault:(id)sender {
+    if (aggassaultPinsOff) {
+        aggassaultPinsOff=false;
+        [self annotateAssaultLocations];
+    }
+    
+}
+
 - (IBAction)ShowArson:(id)sender {
     if (arsonPinsOff) {
         arsonPinsOff=false;
@@ -380,10 +456,12 @@ bool arsonPinsOff = true;
 - (IBAction)removePins:(id)sender {
     barPinsoff = true;
     lStorePinsoff = true;
+    stripClubPinsOff = true;
     policePinsOff = true;
     firePinsOff = true;
     murderPinsoOff = true;
     drunkPinsOff = true;
+    aggassaultPinsOff = true;
     assaultPinsOff = true;
     arsonPinsOff = true;
     [self removeAllPins];
@@ -396,12 +474,27 @@ bool arsonPinsOff = true;
 - (void)zoomToPins {
     [_mapView showAnnotations:[_mapView annotations] animated:true];
 }
+
 -(void) removecircles {
     for (id<MKOverlay> overlay in _mapView.overlays)
     {
         [self.mapView removeOverlay:overlay];
     }
 }
+
+-(void) removePolicecircles {
+    NSMutableArray *policeCircles = [[NSMutableArray alloc] init];
+    for (id<MKOverlay> annot in _mapView.overlays){
+        if ([annot isKindOfClass:[MKCircle class]]) {
+            MyCircle *policeOverlay = (MyCircle *)annot;
+            if ([policeOverlay.circleType isEqualToString:@"police"]) {
+                [policeCircles addObject:annot];
+            }
+        }
+    }
+    [self.mapView removeOverlay:policeCircles];
+}
+
 
 
 - (void)removeAllPins {
@@ -416,22 +509,29 @@ bool arsonPinsOff = true;
 
 - (MKOverlayRenderer *)mapView:(MKMapView *)mapView rendererForOverlay:(id<MKOverlay>)overlay {
     if ([overlay isKindOfClass:[MKCircle class]]) {
-        MyCircle *circle = (MyCircle *)overlay;
+        MyCircle *currentCircle = (MyCircle *)overlay;
         MKCircleRenderer *renderer = [[MKCircleRenderer alloc]initWithOverlay:overlay];
         
-//        if ([circle.circleType isEqualToString:@"police"]) {
+        if ([currentCircle.circleType isEqualToString:@"police"]) {
             [renderer setFillColor:[UIColor blueColor]];
-            [renderer setAlpha:0.2];
-//        } else if ([circle.circleType isEqualToString: @"crime"]) {
-//            [renderer setFillColor:[UIColor darkGrayColor]];
-//            [renderer setAlpha:0.6];
-//        } else if ([circle.circleType isEqualToString:@""]) {
-//            [renderer setFillColor:[UIColor lightGrayColor]];
-//            [renderer setAlpha:0.1];
-//        }
-
+            [renderer setAlpha:0.1];
+        } else if ([currentCircle.circleType isEqualToString: @"arson"]) {
+            [renderer setFillColor:[UIColor brownColor]];
+            [renderer setAlpha:0.5];
+        } else if ([currentCircle.circleType isEqualToString:@"aggassault"]) {
+            [renderer setFillColor:[UIColor darkGrayColor]];
+            [renderer setAlpha:0.5];
+        }else if ([currentCircle.circleType isEqualToString:@"assault"]) {
+            [renderer setFillColor:[UIColor grayColor]];
+            [renderer setAlpha:0.5];
+        }else if ([currentCircle.circleType isEqualToString:@"disorderlyconduct"]) {
+            [renderer setFillColor:[UIColor lightGrayColor]];
+            [renderer setAlpha:0.5];
+        }else if ([currentCircle.circleType isEqualToString:@"murder"]) {
+            [renderer setFillColor:[UIColor blackColor]];
+            [renderer setAlpha:0.5];
+        }
         return renderer;
-
     }
     return nil;
 }
@@ -446,22 +546,34 @@ bool arsonPinsOff = true;
         pinView.animatesDrop = false;
         MyPointAnnotation *annot = (MyPointAnnotation *)annotation;
         if ([annot.pinType isEqualToString:@"lStore"]) {
-            pinView.pinTintColor = [UIColor greenColor];
-            pinView.alpha = 0.5;
+            pinView.pinTintColor = [UIColor lightGrayColor];
+            pinView.alpha = 0.3;
         } else if ([annot.pinType isEqualToString:@"police"]){
             pinView.pinTintColor = [UIColor blueColor];
             pinView.alpha = 1.0;
         } else if ([annot.pinType isEqualToString:@"bar"]){
             pinView.pinTintColor = [UIColor orangeColor];
             pinView.alpha = 0.5;
-        } else if ([annot.pinType isEqualToString:@"crime"]){
-            pinView.pinTintColor = [UIColor darkGrayColor];
+        } else if ([annot.pinType isEqualToString:@"stripclub"]){
+            pinView.pinTintColor = [UIColor purpleColor];
+            pinView.alpha = 0.5;
+        }else if ([annot.pinType isEqualToString:@"assault"]){
+            pinView.pinTintColor = [UIColor cyanColor];
+            pinView.alpha = 0.5;
+        }else if ([annot.pinType isEqualToString:@"murder"]){
+            pinView.pinTintColor = [UIColor blackColor];
+            pinView.alpha = 0.5;
+        }else if ([annot.pinType isEqualToString:@"disorderlyconduct"]){
+            pinView.pinTintColor = [UIColor brownColor];
             pinView.alpha = 0.5;
         }else if ([annot.pinType isEqualToString:@"fire"]){
             pinView.pinTintColor = [UIColor redColor];
             pinView.alpha = 0.5;
         }else if ([annot.pinType isEqualToString:@"arson"]){
-            pinView.pinTintColor = [UIColor blackColor];
+            pinView.pinTintColor = [UIColor yellowColor];
+            pinView.alpha = 0.5;
+        }else if ([annot.pinType isEqualToString:@"aggassault"]){
+            pinView.pinTintColor = [UIColor greenColor];
             pinView.alpha = 0.5;
         }
         return pinView;
@@ -469,28 +581,26 @@ bool arsonPinsOff = true;
     return nil;
 }
 
-#pragma mark - Police map Methods
+#pragma mark - Public Services Methods
 
 - (void)annotatePoliceStationLocations {
     for (PoliceStations *loc in _policeArray) {
         MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
         pa1.coordinate = CLLocationCoordinate2DMake([loc.pLat floatValue], [loc.pLon floatValue]);
-        //NSLog(@"Lat: %f and Lon: %f", [loc.pLat floatValue], [loc.pLon floatValue]);
         pa1.title = loc.pPrecinct;
         pa1.subtitle = loc.pCaptainName;
         pa1.pinType = @"police";
         [_mapView addAnnotation:pa1];
         
-        
         MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:3000];
-        [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         cirlce.circleType=@"police";
+        [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
     }
     
     [self zoomToPins];
 }
 
-#pragma mark - Fire Station methods
+
 - (void)annotateFireStationLocations {
     for (FireStations *loc in _fireArray) {
         MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
@@ -504,7 +614,7 @@ bool arsonPinsOff = true;
     
     [self zoomToPins];
 }
-#pragma mark - Lstore map methods
+#pragma mark - Annotate Liquor Licenses methods
 
 - (void)annotateLStoreLocations {
     for (LiquorStore*loc in _lStoreArray) {
@@ -519,7 +629,6 @@ bool arsonPinsOff = true;
     [self zoomToPins];
 }
 
-#pragma mark - Bars map methods
 
 - (void)annotateBarLocations {
     for (BarsRestaurants*loc in _barsArray) {
@@ -528,6 +637,19 @@ bool arsonPinsOff = true;
         //NSLog(@"Lat: %f and Lon: %f", [loc.Lat floatValue], [loc.Lon floatValue]);
         pa1.title = loc.name;
         pa1.pinType = @"bar";
+        [_mapView addAnnotation:pa1];
+    }
+    
+    [self zoomToPins];
+}
+
+- (void)annotateStripClubLocations {
+    for (BarsRestaurants*loc in _sClubArray) {
+        MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
+        pa1.coordinate = CLLocationCoordinate2DMake([loc.Lat floatValue], [loc.Lon floatValue]);
+        //NSLog(@"Lat: %f and Lon: %f", [loc.Lat floatValue], [loc.Lon floatValue]);
+        pa1.title = loc.name;
+        pa1.pinType = @"stripclub";
         [_mapView addAnnotation:pa1];
     }
     
@@ -543,8 +665,12 @@ bool arsonPinsOff = true;
             pa1.coordinate = coord;
             pa1.title = loc.category;
             pa1.subtitle = loc.date;
-            pa1.pinType = @"crime";
-            [_mapView addAnnotation:pa1];
+            pa1.pinType = @"murder";
+            //[_mapView addAnnotation:pa1];
+            
+            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:75];
+            cirlce.circleType=@"murder";
+            [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
     [self zoomToPins];
@@ -557,8 +683,12 @@ bool arsonPinsOff = true;
             pa1.coordinate = coord;
             pa1.title = loc.category;
             pa1.subtitle = loc.date;
-            pa1.pinType = @"crime";
-            [_mapView addAnnotation:pa1];
+            pa1.pinType = @"disorderlyconduct";
+            //[_mapView addAnnotation:pa1];
+            
+            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:75];
+            cirlce.circleType=@"disoderlyconduct";
+            [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
     [self zoomToPins];
@@ -566,18 +696,41 @@ bool arsonPinsOff = true;
 
 - (void)annotateAssaultLocations {
     for (Crime *loc in _crimeArray) {
-        if ([loc.crimeClass isEqualToString:@"13001"] || [loc.crimeClass isEqualToString:@"53001"]) {
+        if ([loc.crimeClass isEqualToString:@"13001"]) {
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
             pa1.title = loc.category;
             pa1.subtitle = loc.date;
-            pa1.pinType = @"crime";
-            [_mapView addAnnotation:pa1];
+            pa1.pinType = @"assault";
+            //[_mapView addAnnotation:pa1];
+            
+            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:75];
+            cirlce.circleType=@"assault";
+            [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
     [self zoomToPins];
 }
+- (void)annotateAGGAssaultLocations {
+    for (Crime *loc in _crimeArray) {
+        if ([loc.crimeClass isEqualToString:@"13002"]) {
+            CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
+            MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
+            pa1.coordinate = coord;
+            pa1.title = loc.category;
+            pa1.subtitle = loc.date;
+            pa1.pinType = @"aggassault";
+            //[_mapView addAnnotation:pa1];
+            
+            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:75];
+            cirlce.circleType=@"aggassault";
+            [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
+        }
+    }
+    [self zoomToPins];
+}
+
 - (void)annotateArsonLocations {
     for (Crime *loc in _crimeArray) {
         if ([loc.crimeClass isEqualToString:@"20000"]) {
@@ -587,7 +740,11 @@ bool arsonPinsOff = true;
             pa1.title = loc.category;
             pa1.subtitle = loc.date;
             pa1.pinType = @"arson";
-            [_mapView addAnnotation:pa1];
+           // [_mapView addAnnotation:pa1];
+        
+            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:75];
+            cirlce.circleType=@"arson";
+            [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
     [self zoomToPins];
@@ -650,6 +807,9 @@ bool arsonPinsOff = true;
     if (_fireArray.count == 0 || _fireArray == nil) {
         [self getFireInfo];
     }
+    if (_sClubArray.count == 0 || _sClubArray == nil){
+        [self getStripClubInfo];
+    }
 }
 
 -(void)searchResultRecv:(NSNotification *)notification {
@@ -678,6 +838,8 @@ bool arsonPinsOff = true;
     _barsArray = [[NSMutableArray alloc] init];
     _crimeArray = [[NSMutableArray alloc] init];
     _fireArray = [[NSMutableArray alloc] init];
+    _sClubArray = [[NSMutableArray alloc] init];
+
 }
 
 - (void)didReceiveMemoryWarning {
