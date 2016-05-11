@@ -712,6 +712,7 @@ bool arsonPinsOff = true;
     }
     [self zoomToPins];
 }
+
 - (void)annotateAGGAssaultLocations {
     for (Crime *loc in _crimeArray) {
         if ([loc.crimeClass isEqualToString:@"13002"]) {

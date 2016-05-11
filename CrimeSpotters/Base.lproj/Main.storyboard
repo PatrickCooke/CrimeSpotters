@@ -83,7 +83,7 @@
                                             </mask>
                                         </variation>
                                         <connections>
-                                            <action selector="ShowAssault:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UA4-EE-E1K"/>
+                                            <action selector="ShowAssault:" destination="BYZ-38-t0r" eventType="touchUpInside" id="O7o-AT-uGR"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jxI-eD-HNa">
