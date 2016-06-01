@@ -104,8 +104,66 @@ bool arsonPinsOff = true;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"Selected Section:%li Row:%li",indexPath.section, indexPath.row);
-
+    //NSLog(@"Selected Section:%li Row:%li",indexPath.section, indexPath.row);
+    if (indexPath.section == 0){
+        //NSLog(@"public services");
+        switch (indexPath.row) {
+            case 0:
+                NSLog(@"Police");
+                [self showPolice];
+                break;
+            case 1:
+                NSLog(@"Fire");
+                [ self showFire];
+                break;
+            default:
+                break;
+        }
+    } else if (indexPath.section == 1) {
+        //NSLog(@"liqour license");
+        switch (indexPath.row) {
+            case 0:
+                NSLog(@"Liquor Store");
+                [self showLStore];
+                break;
+            case 1:
+                NSLog(@"Bars/Restaurants");
+                [self showBars];
+                break;
+            case 2:
+                NSLog(@"Strip Clubs");
+                [self showSClub];
+                break;
+            default:
+                break;
+        }
+    } else if (indexPath.section == 2) {
+        //NSLog(@"crime");
+        switch (indexPath.row) {
+            case 0:
+                NSLog(@"Arson");
+                [self ShowArson];
+                break;
+            case 1:
+                NSLog(@"Assault");
+                [self ShowAssault];
+                break;
+            case 2:
+                NSLog(@"AggAssault");
+                [self ShowAggAssault];
+                break;
+            case 3:
+                NSLog(@"Disorderly Conduct");
+                [self ShowDisorderlyConduct];
+                break;
+            case 4:
+                NSLog(@"Murder");
+                [self ShowMurder];
+                break;
+            default:
+                break;
+        }
+    }
 }
 
 
@@ -421,7 +479,7 @@ bool arsonPinsOff = true;
         menuhidden = false;
         [UIView animateWithDuration:1.0 animations:^{
             [_menuView setAlpha:0.0];
-//            [_menuView setHidden:true];
+            [_menuCollectionView setAlpha:0.0];
             [self.view layoutIfNeeded];
         }];
         [_menuView setHidden:true];
@@ -429,7 +487,7 @@ bool arsonPinsOff = true;
         menuhidden = true;
         [UIView animateWithDuration:1.0 animations:^{
             [_menuView setAlpha:0.8];
-//            [_menuView setHidden:false];
+            [_menuCollectionView setAlpha:0.8];
             [self.view layoutIfNeeded];
         }];
         [_menuView setHidden:false];
@@ -441,7 +499,6 @@ bool arsonPinsOff = true;
         policePinsOff=false;
         [self annotatePoliceStationLocations];
     }
-    
 }
 
 - (IBAction)FirePins:(id)sender {
@@ -477,7 +534,6 @@ bool arsonPinsOff = true;
         murderPinsoOff=false;
         [self annotateMurderLocations];
     }
-NSLog(@"murder");
 }
 - (IBAction)ShowDrunkenness:(id)sender {
     if (drunkPinsOff) {
@@ -509,6 +565,75 @@ NSLog(@"murder");
     }
     NSLog(@"arson");
 }
+
+- (void) showPolice {
+    if (policePinsOff){
+        policePinsOff=false;
+        [self annotatePoliceStationLocations];
+    }
+}
+
+- (void)showFire {
+    if (firePinsOff){
+        firePinsOff=false;
+        [self annotateFireStationLocations];
+    }
+}
+
+- (void)showBars {
+    if (barPinsoff) {
+        barPinsoff=false;
+        [self annotateBarLocations];
+    }
+}
+
+- (void)showLStore {
+    if (lStorePinsoff) {
+        lStorePinsoff=false;
+        [self annotateLStoreLocations];
+    }
+}
+
+- (void)showSClub {
+    if (stripClubPinsOff) {
+        stripClubPinsOff=false;
+        [self annotateStripClubLocations];
+    }
+}
+
+- (void)ShowMurder {
+    if (murderPinsoOff) {
+        murderPinsoOff=false;
+        [self annotateMurderLocations];
+    }
+}
+- (void)ShowDisorderlyConduct {
+    if (drunkPinsOff) {
+        drunkPinsOff=false;
+        [self annotateDrunkennessLocations];
+    }
+}
+- (void)ShowAssault {
+    if (assaultPinsOff) {
+        assaultPinsOff=false;
+        [self annotateAssaultLocations];
+    }
+}
+
+- (void)ShowAggAssault {
+    if (aggassaultPinsOff) {
+        aggassaultPinsOff=false;
+        [self annotateAssaultLocations];
+    }
+}
+
+- (void)ShowArson {
+    if (arsonPinsOff) {
+        arsonPinsOff=false;
+        [self annotateArsonLocations];
+    }
+}
+
 
 - (IBAction)removePins:(id)sender {
     barPinsoff = true;
@@ -551,8 +676,6 @@ NSLog(@"murder");
     }
     [self.mapView removeOverlays:policeCircles];
 }
-
-
 
 - (void)removeAllPins {
     NSMutableArray *pinsToRemove = [[NSMutableArray alloc] init];

@@ -127,25 +127,6 @@
                                             <action selector="ShowArson:" destination="BYZ-38-t0r" eventType="touchUpInside" id="LRQ-n9-8Ib"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gn6-sZ-CZ9">
-                                        <rect key="frame" x="36" y="330" width="86" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="3gQ-Nh-R3O"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="78" id="J4j-pK-YbC"/>
-                                            <constraint firstAttribute="height" constant="25" id="u6J-fe-Xq1"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                        <state key="normal" title="Clear Info"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="3gQ-Nh-R3O"/>
-                                                <exclude reference="J4j-pK-YbC"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <action selector="removePins:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OMK-lu-6hP"/>
-                                        </connections>
-                                    </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Liquor License Type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gAU-VR-Wa4">
                                         <rect key="frame" x="8" y="87" width="142" height="21"/>
                                         <constraints>
@@ -216,7 +197,6 @@
                                     <constraint firstItem="gAU-VR-Wa4" firstAttribute="leading" secondItem="aYH-nF-utA" secondAttribute="leading" constant="8" id="5xF-DE-hNc"/>
                                     <constraint firstAttribute="trailing" secondItem="bTO-FH-RNU" secondAttribute="trailing" constant="8" id="7gt-lZ-GJd"/>
                                     <constraint firstAttribute="trailing" secondItem="ywY-mT-3g8" secondAttribute="trailing" constant="23" id="7mk-PW-r1l"/>
-                                    <constraint firstItem="gn6-sZ-CZ9" firstAttribute="centerX" secondItem="aYH-nF-utA" secondAttribute="centerX" id="9Bg-Gs-fgI"/>
                                     <constraint firstItem="jxI-eD-HNa" firstAttribute="top" secondItem="9SW-Hz-WEs" secondAttribute="bottom" constant="15" id="9Ms-Rv-bqC"/>
                                     <constraint firstItem="ywY-mT-3g8" firstAttribute="top" secondItem="gAU-VR-Wa4" secondAttribute="bottom" constant="13" id="AEQ-px-fU6"/>
                                     <constraint firstItem="9SW-Hz-WEs" firstAttribute="top" secondItem="bTO-FH-RNU" secondAttribute="bottom" constant="10" id="CGd-2s-zuf"/>
@@ -227,7 +207,6 @@
                                     <constraint firstAttribute="trailing" secondItem="hWd-Pi-GK4" secondAttribute="trailing" constant="23" id="M5m-ja-l5p"/>
                                     <constraint firstAttribute="trailing" secondItem="Jm9-Ia-dIo" secondAttribute="trailing" constant="8" id="OPd-Wr-L4p"/>
                                     <constraint firstItem="wzn-S1-u6L" firstAttribute="width" secondItem="6h8-La-ppd" secondAttribute="width" id="Ry4-pO-46f"/>
-                                    <constraint firstAttribute="trailing" secondItem="gn6-sZ-CZ9" secondAttribute="trailing" constant="36" id="UJ0-Yq-yWc"/>
                                     <constraint firstItem="Jm9-Ia-dIo" firstAttribute="leading" secondItem="aYH-nF-utA" secondAttribute="leading" constant="8" id="Vbi-M1-cYa"/>
                                     <constraint firstItem="1SS-w9-pMa" firstAttribute="top" secondItem="aYH-nF-utA" secondAttribute="top" constant="41" id="XBW-ZW-rjQ"/>
                                     <constraint firstItem="wzn-S1-u6L" firstAttribute="top" secondItem="DNs-re-aRL" secondAttribute="bottom" constant="8" id="XTr-ns-yZL"/>
@@ -236,7 +215,6 @@
                                     <constraint firstAttribute="trailing" secondItem="DNs-re-aRL" secondAttribute="trailing" constant="23" id="aWN-hI-d1S"/>
                                     <constraint firstItem="A6j-dh-acp" firstAttribute="top" secondItem="Jm9-Ia-dIo" secondAttribute="bottom" constant="10" id="af2-cZ-jQZ"/>
                                     <constraint firstItem="A6j-dh-acp" firstAttribute="leading" secondItem="aYH-nF-utA" secondAttribute="leading" constant="21" id="bpm-LY-yLs"/>
-                                    <constraint firstAttribute="bottom" secondItem="gn6-sZ-CZ9" secondAttribute="bottom" id="cbT-cm-CCq"/>
                                     <constraint firstAttribute="width" constant="158" id="eu3-Bn-7cJ"/>
                                     <constraint firstAttribute="height" constant="180" id="fOr-7Y-npX"/>
                                     <constraint firstAttribute="trailing" secondItem="wzn-S1-u6L" secondAttribute="trailing" constant="24" id="j77-Ke-yf5"/>
@@ -280,13 +258,13 @@
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="whM-NU-fje">
                                     <size key="itemSize" width="60" height="70"/>
-                                    <size key="headerReferenceSize" width="0.0" height="20"/>
-                                    <size key="footerReferenceSize" width="0.0" height="10"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="15" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Igt-YL-Ltt" customClass="CustomCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="20" width="60" height="70"/>
+                                        <rect key="frame" x="0.0" y="15" width="60" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="60" height="70"/>
@@ -325,28 +303,44 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="B7K-LJ-l8H">
-                                    <rect key="frame" x="0.0" y="0.0" width="135" height="20"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </collectionReusableView>
-                                <collectionReusableView key="sectionFooterView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="G9k-PL-OlV">
-                                    <rect key="frame" x="0.0" y="90" width="135" height="10"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </collectionReusableView>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="g05-nZ-NAm"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="DBa-Pl-8O5"/>
                                 </connections>
                             </collectionView>
+                            <button opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gn6-sZ-CZ9">
+                                <rect key="frame" x="494" y="517" width="86" height="25"/>
+                                <color key="backgroundColor" red="0.94509803920000002" green="0.94117647059999998" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="34" id="3gQ-Nh-R3O"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="78" id="J4j-pK-YbC"/>
+                                    <constraint firstAttribute="width" constant="86" id="Vma-cr-dSr"/>
+                                    <constraint firstAttribute="height" constant="25" id="u6J-fe-Xq1"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Clear Info"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="3gQ-Nh-R3O"/>
+                                        <exclude reference="J4j-pK-YbC"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="removePins:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OMK-lu-6hP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="fF7-3p-bUu" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="BlW-8a-n32"/>
+                            <constraint firstItem="u9v-WR-Gcx" firstAttribute="top" secondItem="gn6-sZ-CZ9" secondAttribute="bottom" constant="8" id="CGz-q4-Fa6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fO1-UH-HrV" secondAttribute="trailing" constant="-20" id="HBg-n4-kZ2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="u9v-WR-Gcx" secondAttribute="trailing" id="HCS-W2-hgE"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="u9v-WR-Gcx" secondAttribute="bottom" constant="20" id="HRp-mN-vyN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fF7-3p-bUu" secondAttribute="trailing" id="Her-Ig-yuN"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gn6-sZ-CZ9" secondAttribute="trailing" id="Kpa-gy-KR5"/>
                             <constraint firstAttribute="leadingMargin" secondItem="aYH-nF-utA" secondAttribute="leading" id="cC7-I2-kdh"/>
+                            <constraint firstItem="gn6-sZ-CZ9" firstAttribute="leading" secondItem="fO1-UH-HrV" secondAttribute="trailing" constant="-106" id="cp7-ra-a07"/>
                             <constraint firstItem="fO1-UH-HrV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="i94-Ga-wB0"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="fO1-UH-HrV" secondAttribute="bottom" id="sZm-Um-T3s"/>
                             <constraint firstItem="fO1-UH-HrV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="to0-Kp-UP0"/>
@@ -356,6 +350,7 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="uuD-rV-Pud"/>
+                                <exclude reference="cp7-ra-a07"/>
                             </mask>
                         </variation>
                     </view>
