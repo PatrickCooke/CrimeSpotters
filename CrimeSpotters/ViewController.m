@@ -257,7 +257,6 @@ bool arsonPinsOff = true;
 
 #pragma mark - Liquor Store Data
 
-
 - (void)getLLInfo {
     if (serverAvailable) {
         NSLog(@"Server Available");
