@@ -117,6 +117,15 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="DBa-Pl-8O5"/>
                                 </connections>
                             </collectionView>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="pVp-8T-0kY">
+                                <rect key="frame" x="18" y="550" width="416" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="QTr-Ju-xoR"/>
+                                </constraints>
+                                <connections>
+                                    <action selector="sliderchanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="88y-jQ-uTh"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -129,7 +138,10 @@
                             <constraint firstAttribute="trailingMargin" secondItem="fF7-3p-bUu" secondAttribute="trailing" id="Her-Ig-yuN"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gn6-sZ-CZ9" secondAttribute="trailing" id="Kpa-gy-KR5"/>
                             <constraint firstItem="gn6-sZ-CZ9" firstAttribute="leading" secondItem="fO1-UH-HrV" secondAttribute="trailing" constant="-106" id="cp7-ra-a07"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pVp-8T-0kY" secondAttribute="bottom" constant="20" id="gFS-Qo-yak"/>
                             <constraint firstItem="fO1-UH-HrV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="-20" id="i94-Ga-wB0"/>
+                            <constraint firstItem="u9v-WR-Gcx" firstAttribute="leading" secondItem="pVp-8T-0kY" secondAttribute="trailing" constant="8" id="nh1-Q4-ufe"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="pVp-8T-0kY" secondAttribute="leading" id="rg7-Cq-l4o"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="fO1-UH-HrV" secondAttribute="bottom" id="sZm-Um-T3s"/>
                             <constraint firstItem="fO1-UH-HrV" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="to0-Kp-UP0"/>
                         </constraints>
@@ -143,6 +155,7 @@
                     <connections>
                         <outlet property="mapView" destination="fO1-UH-HrV" id="uqC-ty-H5c"/>
                         <outlet property="menuCollectionView" destination="fF7-3p-bUu" id="z2C-ca-1BK"/>
+                        <outlet property="policeAreaSlider" destination="pVp-8T-0kY" id="ffK-s6-YH7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
