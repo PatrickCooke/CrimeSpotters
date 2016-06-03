@@ -16,6 +16,7 @@
 #import "MyPointAnnotation.h"
 #import "MyCircle.h"
 #import "CustomCollectionViewCell.h"
+#import "MenuHeaderCollectionReusableView.h"
 #import <MapKit/MapKit.h>
 
 @interface ViewController ()
@@ -38,6 +39,8 @@
 @property (nonatomic, strong)         NSArray           *liquorTypeIconsArray;
 @property (nonatomic, strong)         NSArray           *crimeActsIconsArray;
 @property (nonatomic, weak) IBOutlet  UISlider          *policeAreaSlider;
+@property (nonatomic, weak) IBOutlet  UILabel           *policeRadiusLabel;
+@property (nonatomic, weak) IBOutlet  UILabel           *collectionViewHeaderLabel;
 
 @end
 
@@ -101,6 +104,19 @@ double policeArea = 3000.0;
     cell.itemLabel.text = itemLabel;
     cell.itemImageView.image = [UIImage imageNamed: iconName];
     return cell;
+}
+
+-(void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
+    if (elementKind == UICollectionElementKindSectionHeader) {
+        MenuHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
+        if (indexPath.section == 0) {
+                headerView.sectionLabel.text = [NSString stringWithFormat: @"Public Services"];
+        } else if (indexPath.section == 1) {
+                headerView.sectionLabel.text = [NSString stringWithFormat: @"Liquor License Type"];
+        } else if (indexPath.section == 2) {
+                headerView.sectionLabel.text = [NSString stringWithFormat: @"Crime Type"];
+        }
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -168,7 +184,7 @@ double policeArea = 3000.0;
 #pragma mark - Pull Police Data
 
 - (void)getPoliceInfo {
-    NSLog(@"GPI");
+//    NSLog(@"GPI");
     if (serverAvailable) {
         NSLog(@"Server Available");
         NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/3n6r-g9kp.json?$$app_token=bjp8KrRvAPtuf809u1UXnI0Z8", _hostName]];
@@ -177,9 +193,9 @@ double policeArea = 3000.0;
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
         [request setTimeoutInterval:30.0];
         NSURLSession *session = [NSURLSession sharedSession];
-        NSLog(@"URL searhing: %@",fileURL);
+       // NSLog(@"URL searhing: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            NSLog(@"Got Response");
+            NSLog(@"Got Police Response");
             if (([data length] > 0) && (error == nil)) {
                 NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 //NSLog(@"Got jSON %@", json);
@@ -211,7 +227,7 @@ double policeArea = 3000.0;
 #pragma mark - Pull Fire Station Data
 
 - (void)getFireInfo {
-    NSLog(@"GPI");
+//    NSLog(@"GPI");
     if (serverAvailable) {
         NSLog(@"Server Available");
         NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/hz79-58xh.json?$$app_token=bjp8KrRvAPtuf809u1UXnI0Z8", _hostName]];
@@ -220,9 +236,9 @@ double policeArea = 3000.0;
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
         [request setTimeoutInterval:30.0];
         NSURLSession *session = [NSURLSession sharedSession];
-        NSLog(@"URL searhing: %@",fileURL);
+        //NSLog(@"URL searhing: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            NSLog(@"Got Response");
+            NSLog(@"Got Fire Response");
             if (([data length] > 0) && (error == nil)) {
                 NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 //NSLog(@"Got jSON %@", json);
@@ -262,9 +278,9 @@ double policeArea = 3000.0;
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
         [request setTimeoutInterval:30.0];
         NSURLSession *session = [NSURLSession sharedSession];
-        NSLog(@"URL searhing: %@",fileURL);
+//        NSLog(@"URL searching: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            NSLog(@"Got Response");
+            NSLog(@"Got LL Response");
             if (([data length] > 0) && (error == nil)) {
                 NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 //NSLog(@"Got jSON %@", json);
@@ -287,7 +303,7 @@ double policeArea = 3000.0;
 
                     BarsRestaurants *newstore = [[BarsRestaurants alloc] initWithName:name andpermitType:permittype andLat:lat andlon:lon andaddress:street andcity:city andzip:zip andactive:active];
                     if (lat == NULL) {
-                        NSLog(@"toss these out");
+                        //NSLog(@"toss these out");
                     } else if ([permittype containsString:@"TLESSACT"]) {
                         [_sClubArray addObject:newstore];
                     } else if ([permittype containsString:@"ADDBAR"] || [permittype containsString:@"FOOD"] || [name containsString:@"PUB"] || /*[permittype containsString:@"OD-SERV"] &&*/ [name containsString:@"RESTAURANT"] || [name containsString:@"LOUNGE"]) {                        [_barsArray addObject:newstore];
@@ -315,15 +331,15 @@ double policeArea = 3000.0;
 - (void)getCrimeInfo {
     if (serverAvailable) {
         NSLog(@"Server Available");
-        NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/i9ph-uyrp.json?$limit=20000&$$app_token=SiWSm0v7gKl8NxUd7vZCJQkzP", _hostName]];
+        NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/i9ph-uyrp.json?$limit=10000&$$app_token=SiWSm0v7gKl8NxUd7vZCJQkzP", _hostName]];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:fileURL];
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
         [request setTimeoutInterval:30.0];
         NSURLSession *session = [NSURLSession sharedSession];
-        NSLog(@"URL searhing: %@",fileURL);
+        NSLog(@"URL searching: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            NSLog(@"Got Response");
+            NSLog(@"Got Crime Response");
             if (([data length] > 0) && (error == nil)) {
                 NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 //NSLog(@"Got jSON %@", json);
@@ -343,9 +359,8 @@ double policeArea = 3000.0;
                     [_crimeArray addObject:newCrime];
                 }
                 NSMutableArray *discardedItems = [NSMutableArray array];
-                
                 for (Crime *loc in _crimeArray) {
-                    if (loc.lat == 0) [discardedItems addObject:loc];
+                    if (loc.lat == NULL) [discardedItems addObject:loc];
                     if ([loc.lat floatValue] > 90) [discardedItems addObject:loc];
                 }
                 
@@ -402,12 +417,22 @@ double policeArea = 3000.0;
         policePinsOff=false;
         [self annotatePoliceStationLocations];
         
+        [UIView animateWithDuration:0.5 animations:^{
+            [_policeAreaSlider setAlpha:1.0];
+            [_policeRadiusLabel setAlpha:0.8];
+            [self.view layoutIfNeeded];
+        }];
     } else {
         [self removePinTypes:@"police"];
         policePinsOff = true;
-        
+        [UIView animateWithDuration:0.5 animations:^{
+            [_policeAreaSlider setAlpha:0.0];
+            [_policeRadiusLabel setAlpha:0.0];
+            [self.view layoutIfNeeded];
+        }];
     }
 }
+
 
 - (void)showFire {
     if (firePinsOff){
@@ -534,6 +559,7 @@ double policeArea = 3000.0;
         }
     }
     [_mapView removeAnnotations:pinsToRemove];
+    
     NSMutableArray *circles = [[NSMutableArray alloc] init];
     for (id<MKOverlay> annot in _mapView.overlays){
         if ([annot isKindOfClass:[MKCircle class]]) {
@@ -555,7 +581,7 @@ double policeArea = 3000.0;
             [renderer setFillColor:[UIColor blueColor]];
             [renderer setAlpha:0.1];
         } else if ([currentCircle.circleType isEqualToString: @"arson"]) {
-            [renderer setFillColor:[UIColor colorWithRed:(160/255.0) green:(97/255.0) blue:(5/255.0) alpha:1]];
+            [renderer setFillColor:[UIColor redColor]];
             [renderer setAlpha:0.8];
         } else if ([currentCircle.circleType isEqualToString:@"aggassault"]) {
             [renderer setFillColor:[UIColor darkGrayColor]];
@@ -639,22 +665,20 @@ double policeArea = 3000.0;
 }
 
 -(IBAction)sliderchanged:(UISlider *)slider {
-    policeArea = (_policeAreaSlider.value * 6000);
-    NSLog(@"Slider Changed: %f, %f", policeArea, _policeAreaSlider.value);
-
+    int(policeArea) = (_policeAreaSlider.value * 6000);
+    NSLog(@"Slider Changed: %d, %f", policeArea, _policeAreaSlider.value);
+    _policeRadiusLabel.text = ([NSString stringWithFormat:@"Police Radius: %d m",policeArea ]);
     for (id<MKOverlay> annot in _mapView.overlays){
         if ([annot isKindOfClass:[MKCircle class]]) {
             MyCircle *overlay = (MyCircle *)annot;
             if ([overlay.circleType isEqualToString:@"police"]) {
-                //NSLog(@"is Police");
-                MyCircle *newOverlay = [MyCircle circleWithCenterCoordinate:overlay.coordinate radius:overlay.radius];
-                newOverlay.circleType = overlay.circleType;
                 [_mapView removeOverlay:overlay];
-                [_mapView addOverlay:newOverlay];
+                MyCircle *newOverlay = [MyCircle circleWithCenterCoordinate:overlay.coordinate radius:policeArea];
+                newOverlay.circleType =@"police";
+                [_mapView addOverlay:newOverlay level:MKOverlayLevelAboveRoads];
             }
         }
     }
-
 }
 
 - (void)annotateFireStationLocations {
@@ -705,7 +729,7 @@ double policeArea = 3000.0;
 
 - (void)annotateDisorderlyConductLocations {
     for (Crime *loc in _crimeArray) {
-        if ([loc.crimeClass isEqualToString:@"42000"] || [loc.crimeClass isEqualToString:@"53001"]) {
+        if ([loc.crimeClass isEqualToString:@"53002"] || [loc.crimeClass isEqualToString:@"53001"]) {
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
@@ -713,7 +737,7 @@ double policeArea = 3000.0;
             pa1.subtitle = loc.date;
             pa1.pinType = @"disorderlyconduct";
             MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:150];
-            cirlce.circleType=@"disoderlyconduct";
+            cirlce.circleType=@"disorderlyconduct";
             [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
@@ -855,6 +879,11 @@ double policeArea = 3000.0;
     _crimeArray = [[NSMutableArray alloc] init];
     _fireArray = [[NSMutableArray alloc] init];
     _sClubArray = [[NSMutableArray alloc] init];
+    
+    _menuCollectionView.layer.cornerRadius = 8.0;
+    [_policeAreaSlider setAlpha:0.0];
+    [_policeRadiusLabel setAlpha:0.0];
+    
 
     _publicServicesArray = @[@"Police", @"Fire"];
     _liquorTypeArray = @[@"Liquor Stores", @"Bars/Restaurants", @"Strip Clubs"];
