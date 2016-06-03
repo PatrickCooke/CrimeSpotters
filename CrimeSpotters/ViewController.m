@@ -12,6 +12,7 @@
 #import "FireStations.h"
 #import "LiquorStore.h"
 #import "Crime.h"
+#import "Property.h"
 #import "BarsRestaurants.h"
 #import "MyPointAnnotation.h"
 #import "MyCircle.h"
@@ -30,7 +31,8 @@
 @property (nonatomic, strong)         NSMutableArray     *barsArray;
 @property (nonatomic, strong)         NSMutableArray     *sClubArray;
 @property (nonatomic, strong)         NSMutableArray     *crimeArray;
-@property (nonatomic, weak) IBOutlet  NSLayoutConstraint *insideMenuConstant;
+@property (nonatomic, strong)         NSMutableArray     *propertyArray;
+//@property (nonatomic, weak) IBOutlet  NSLayoutConstraint *insideMenuConstant;
 @property (nonatomic, weak) IBOutlet  UICollectionView   *menuCollectionView;
 @property (nonatomic, strong)         NSArray           *publicServicesArray;
 @property (nonatomic, strong)         NSArray           *liquorTypeArray;
@@ -106,17 +108,19 @@ double policeArea = 3000.0;
     return cell;
 }
 
--(void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath {
-    if (elementKind == UICollectionElementKindSectionHeader) {
+-(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    if (kind == UICollectionElementKindSectionHeader) {
         MenuHeaderCollectionReusableView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"header" forIndexPath:indexPath];
         if (indexPath.section == 0) {
-                headerView.sectionLabel.text = [NSString stringWithFormat: @"Public Services"];
+            headerView.sectionLabel.text = [NSString stringWithFormat: @"Public Services"];
         } else if (indexPath.section == 1) {
-                headerView.sectionLabel.text = [NSString stringWithFormat: @"Liquor License Type"];
+            headerView.sectionLabel.text = [NSString stringWithFormat: @"Liquor License Type"];
         } else if (indexPath.section == 2) {
-                headerView.sectionLabel.text = [NSString stringWithFormat: @"Crime Type"];
+            headerView.sectionLabel.text = [NSString stringWithFormat: @"Crime Type"];
         }
+        return headerView;
     }
+    return nil;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -224,6 +228,54 @@ double policeArea = 3000.0;
     }
 }
 
+#pragma mark - Pull property Data
+/*
+website source for property class code  - https://www.michigan.gov/documents/treasury/STC_Recommended_Codes_351268_7.pdf
+api data displayed- https://data.detroitmi.gov/Property-Parcels/Property-Sales-History/w8m7-eib7
+api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
+*/
+- (void)getPropertyInfo {
+    //    NSLog(@"GPI");
+    if (serverAvailable) {
+        NSLog(@"Server Available");
+        NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/fg2b-gvgp.json?$$app_token=bjp8KrRvAPtuf809u1UXnI0Z8", _hostName]];
+        NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+        [request setURL:fileURL];
+        [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+        [request setTimeoutInterval:30.0];
+        NSURLSession *session = [NSURLSession sharedSession];
+        // NSLog(@"URL searhing: %@",fileURL);
+        [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            NSLog(@"Got Property Response");
+            if (([data length] > 0) && (error == nil)) {
+                NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
+                //NSLog(@"Got jSON %@", json);
+                [_propertyArray removeAllObjects];
+                NSArray *tempArray = (NSArray *)json;
+                for (NSDictionary *property in tempArray) {
+                    NSString *streetno = [property objectForKey:@"propno"];
+                    NSString *streetname = [property objectForKey:@"propstr"];
+                    NSString *Address = [NSString stringWithFormat:@"%@ %@",streetno, streetname];
+                    NSString *zip = [property objectForKey:@"propzip"];
+                    NSString *price = [property objectForKey:@"lsprice"];
+                    NSString *propclass = [property objectForKey:@"propclass"];
+                    Property *newProperty = [[Property alloc] initWithpropPrice:price andpropClass:propclass andpropAddress:Address andpropZip:zip];
+                    if (price.integerValue >= 99) {
+                        if ([propclass isEqualToString:@"401"] || [propclass isEqualToString:@"402"] || [propclass isEqualToString:@"403"] || [propclass isEqualToString:@"404"] || [propclass isEqualToString:@"407"] || [propclass isEqualToString:@"410"] || [propclass isEqualToString:@"411"] || [propclass isEqualToString:@"420"] || [propclass isEqualToString:@"451"] || [propclass isEqualToString:@"207"]){
+                            [_propertyArray addObject:newProperty];
+                        }
+                    }
+                }
+                NSLog(@"property records %li", _propertyArray.count);
+//
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"dataRcvMsg" object:nil];
+                });
+            }}] resume];
+    }
+}
+
+
 #pragma mark - Pull Fire Station Data
 
 - (void)getFireInfo {
@@ -306,7 +358,7 @@ double policeArea = 3000.0;
                         //NSLog(@"toss these out");
                     } else if ([permittype containsString:@"TLESSACT"]) {
                         [_sClubArray addObject:newstore];
-                    } else if ([permittype containsString:@"ADDBAR"] || [permittype containsString:@"FOOD"] || [name containsString:@"PUB"] || /*[permittype containsString:@"OD-SERV"] &&*/ [name containsString:@"RESTAURANT"] || [name containsString:@"LOUNGE"]) {                        [_barsArray addObject:newstore];
+                    } else if ([permittype containsString:@"ADDBAR"] || [permittype containsString:@"FOOD"] || [name containsString:@"PUB"] || [permittype containsString:@"OD-SERV"] || [name containsString:@"RESTAURANT"] || [name containsString:@"LOUNGE"]) {                        [_barsArray addObject:newstore];
                     } else {
                         LiquorStore *newstore = [[LiquorStore alloc] initWithName:name andpermitType:permittype andLat:lat andlon:lon andaddress:street andcity:city andzip:zip andactive:active];
                         [_lStoreArray addObject:newstore];
@@ -337,7 +389,7 @@ double policeArea = 3000.0;
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
         [request setTimeoutInterval:30.0];
         NSURLSession *session = [NSURLSession sharedSession];
-        NSLog(@"URL searching: %@",fileURL);
+        //NSLog(@"URL searching: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             NSLog(@"Got Crime Response");
             if (([data length] > 0) && (error == nil)) {
@@ -407,6 +459,8 @@ double policeArea = 3000.0;
     arsonPinsOff = true;
     [self removeAllPins];
     [self removecircles];
+    [_policeAreaSlider setAlpha:0.0];
+    [_policeRadiusLabel setAlpha:0.0];
     
 }
 
@@ -840,6 +894,10 @@ double policeArea = 3000.0;
     if (_policeArray.count == 0 || _policeArray == nil) {
         [self getPoliceInfo];
     }
+    if (_propertyArray.count == 0 || _propertyArray == nil) {
+        [self getPropertyInfo];
+    }
+
     if (_crimeArray.count == 0 || _crimeArray == nil) {
         [self getCrimeInfo];
     }
@@ -872,7 +930,11 @@ double policeArea = 3000.0;
     wifiReach = [Reachability reachabilityForLocalWiFi];
     [wifiReach startNotifier];
     
+    MKCoordinateRegion region = [_mapView regionThatFits:MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2DMake(42.4, -83.09), 50000, 50000)];
+    [_mapView setRegion:region animated:YES];
+    
     _policeArray = [[NSMutableArray alloc] init];
+    _propertyArray = [[NSMutableArray alloc] init];
     _unusedArray = [[NSMutableArray alloc] init];
     _lStoreArray = [[NSMutableArray alloc] init];
     _barsArray = [[NSMutableArray alloc] init];
