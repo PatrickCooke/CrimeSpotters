@@ -10,13 +10,16 @@
 
 @implementation Property
 
--(id) initWithpropPrice:(NSString *)propPrice andpropClass:(NSString *)propClass andpropAddress:(NSString *)propAddress andpropZip:(NSString *)propZip {
+-(id) initWithpropPrice:(NSString *)propPrice andpropClass:(NSString *)propClass andpropAddress:(NSString *)propAddress andpropZip:(NSString *)propZip andparcelNumber:(NSString *)parcelNumber andpropLat:(NSString *)propLat andpropLon:(NSString *)propLon {
     self = [super init];
     if (self) {
         self.propPrice = propPrice;
         self.propClass = propClass;
         self.propAddress = propAddress;
         self.propZip = propZip;
+        self.parcelNumber = parcelNumber;
+        self.propLat = propLat;
+        self.propLon = propLon;
     }
     return self;
 }

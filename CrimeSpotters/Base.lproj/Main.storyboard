@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--CrimeSpotters: Detroit-->
@@ -43,6 +44,40 @@
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;$10k" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="giZ-1k-AWD">
+                                <rect key="frame" x="43" y="72" width="46" height="21"/>
+                                <color key="backgroundColor" red="0.95602115399999998" green="0.95132935110000005" blue="0.96210323949999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="46" id="6iQ-P5-0yY"/>
+                                    <constraint firstAttribute="height" constant="21" id="cQa-KL-5zC"/>
+                                    <constraint firstAttribute="width" constant="180" id="fK7-QF-aA5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="fK7-QF-aA5"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;$125k" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W2a-FW-Zwd">
+                                <rect key="frame" x="43" y="491.5" width="54" height="21"/>
+                                <color key="backgroundColor" red="0.95602115399999998" green="0.95132935110000005" blue="0.96210323949999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="Tr1-yG-ybG"/>
+                                    <constraint firstAttribute="height" constant="21" id="pxJ-dC-gEb"/>
+                                    <constraint firstAttribute="width" constant="54" id="zun-Qv-Shl"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="12"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="Tr1-yG-ybG"/>
+                                    </mask>
+                                </variation>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.80000000000000004" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fF7-3p-bUu">
                                 <rect key="frame" x="445" y="77" width="135" height="290"/>
@@ -127,16 +162,29 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="DBa-Pl-8O5"/>
                                 </connections>
                             </collectionView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="property price scale" translatesAutoresizingMaskIntoConstraints="NO" id="xDj-gf-P0l">
+                                <rect key="frame" x="20" y="72" width="15" height="437"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="15" id="vKl-tS-LhA"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="W2a-FW-Zwd" firstAttribute="leading" secondItem="xDj-gf-P0l" secondAttribute="trailing" constant="8" id="2B3-Q9-h4l"/>
                             <constraint firstAttribute="leadingMargin" secondItem="fF7-3p-bUu" secondAttribute="leading" id="3gG-ja-yJ7"/>
+                            <constraint firstItem="giZ-1k-AWD" firstAttribute="leading" secondItem="xDj-gf-P0l" secondAttribute="trailing" constant="8" id="4Dv-wQ-XBy"/>
                             <constraint firstItem="fF7-3p-bUu" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="13" id="BlW-8a-n32"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fO1-UH-HrV" secondAttribute="trailing" constant="-20" id="HBg-n4-kZ2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fF7-3p-bUu" secondAttribute="trailing" id="Her-Ig-yuN"/>
+                            <constraint firstItem="giZ-1k-AWD" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="INh-U3-FFf"/>
+                            <constraint firstItem="W2a-FW-Zwd" firstAttribute="baseline" secondItem="xDj-gf-P0l" secondAttribute="baseline" id="LW9-Jn-gT2"/>
                             <constraint firstAttribute="leadingMargin" secondItem="xZJ-EI-yFl" secondAttribute="leading" id="Uym-ni-IIr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pVp-8T-0kY" secondAttribute="trailing" id="VIY-X5-ypu"/>
+                            <constraint firstItem="xZJ-EI-yFl" firstAttribute="top" secondItem="xDj-gf-P0l" secondAttribute="bottom" constant="8" id="Xs2-UZ-8S4"/>
+                            <constraint firstItem="xDj-gf-P0l" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="dwv-Xl-3qe"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="pVp-8T-0kY" secondAttribute="bottom" constant="20" id="gFS-Qo-yak"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="xDj-gf-P0l" secondAttribute="leading" id="hMZ-Op-UjS"/>
                             <constraint firstItem="fO1-UH-HrV" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="i94-Ga-wB0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fF7-3p-bUu" secondAttribute="trailing" id="mVg-bJ-r2i"/>
                             <constraint firstItem="pVp-8T-0kY" firstAttribute="top" secondItem="xZJ-EI-yFl" secondAttribute="bottom" constant="12" id="plj-io-ocr"/>
@@ -157,17 +205,27 @@
                                 <action selector="removePins:" destination="BYZ-38-t0r" id="trQ-y5-LUC"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Menu" id="RKX-68-5hi">
-                            <connections>
-                                <action selector="showHideMenu:" destination="BYZ-38-t0r" id="Ogl-gO-jdX"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Menu" id="RKX-68-5hi">
+                                <connections>
+                                    <action selector="showHideMenu:" destination="BYZ-38-t0r" id="Ogl-gO-jdX"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="refresh" id="mTR-pA-Qq8">
+                                <connections>
+                                    <action selector="refreshPressed:" destination="BYZ-38-t0r" id="Ug7-MJ-Moj"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="highMoneyLabel" destination="W2a-FW-Zwd" id="Avo-iJ-g0i"/>
+                        <outlet property="lowMoneyLabel" destination="giZ-1k-AWD" id="R2l-yf-63m"/>
                         <outlet property="mapView" destination="fO1-UH-HrV" id="uqC-ty-H5c"/>
                         <outlet property="menuCollectionView" destination="fF7-3p-bUu" id="z2C-ca-1BK"/>
                         <outlet property="policeAreaSlider" destination="pVp-8T-0kY" id="ffK-s6-YH7"/>
                         <outlet property="policeRadiusLabel" destination="xZJ-EI-yFl" id="XNZ-Ut-4K4"/>
+                        <outlet property="propertyPriceImageView" destination="xDj-gf-P0l" id="rq0-oL-nBs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -193,4 +251,7 @@
             <point key="canvasLocation" x="304" y="322"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="property price scale" width="5" height="50"/>
+    </resources>
 </document>
