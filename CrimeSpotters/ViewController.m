@@ -147,11 +147,13 @@ bool property4PinsOff = true;
         switch (indexPath.row) {
             case 0:
                 NSLog(@"Police");
-                [self showPolice];
+//                [self showPolice];
+                [self checkPolice];
                 break;
             case 1:
                 NSLog(@"Fire");
-                [ self showFire];
+//                [ self showFire];
+                [self checkFire];
                 break;
             default:
                 break;
@@ -160,15 +162,18 @@ bool property4PinsOff = true;
         switch (indexPath.row) {
             case 0:
                 NSLog(@"Liquor Store");
-                [self showLStore];
+//                [self showLStore];
+                [self checkLStore];
                 break;
             case 1:
                 NSLog(@"Bars/Restaurants");
-                [self showBars];
+//                [self showBars];
+                [self checkBars];
                 break;
             case 2:
                 NSLog(@"Strip Clubs");
-                [self showSClub];
+//                [self showSClub];
+                [self checkSClubs];
                 break;
             default:
                 break;
@@ -177,23 +182,28 @@ bool property4PinsOff = true;
         switch (indexPath.row) {
             case 0:
                 NSLog(@"Arson");
-                [self ShowArson];
+//                [self ShowArson];
+                [self checkArson];
                 break;
             case 1:
                 NSLog(@"Assault");
-                [self ShowAssault];
+//                [self ShowAssault];
+                [self checkAssault];
                 break;
             case 2:
                 NSLog(@"AggAssault");
-                [self ShowAggAssault];
+//                [self ShowAggAssault];
+                [self checkaggAssault];
                 break;
             case 3:
                 NSLog(@"Disorderly Conduct");
-                [self ShowDisorderlyConduct];
+//                [self ShowDisorderlyConduct];
+                [self checkDisorderly];
                 break;
             case 4:
                 NSLog(@"Murder");
-                [self ShowMurder];
+//                [self ShowMurder];
+                [self checkMurder];
                 break;
             default:
                 break;
@@ -201,24 +211,29 @@ bool property4PinsOff = true;
     } else if (indexPath.section == 3) {
         switch (indexPath.row) {
             case 0:
-                NSLog(@"House Prices");
-                [self ShowProperty0];
+                NSLog(@"prop0");
+//                [self ShowProperty0];
+                [self checkProperty0];
                 break;
             case 1:
-                NSLog(@"House Prices");
-                [self ShowProperty1];
+                NSLog(@"prop1");
+//                [self ShowProperty1];
+                [self checkProperty1];
                 break;
             case 2:
-                NSLog(@"House Prices");
-                [self ShowProperty2];
+                NSLog(@"prop2");
+//                [self ShowProperty2];
+                [self checkProperty2];
                 break;
             case 3:
-                NSLog(@"House Prices");
-                [self ShowProperty3];
+                NSLog(@"prop3");
+//                [self ShowProperty3];
+                [self checkProperty3];
                 break;
             case 4:
-                NSLog(@"House Prices");
-                [self ShowProperty4];
+                NSLog(@"prop4");
+//                [self ShowProperty4];
+                [self checkProperty4];
                 break;
             default:
                 break;
@@ -266,7 +281,7 @@ bool property4PinsOff = true;
                 NSLog(@"Police records %li", _policeArray.count);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"dataRcvMsg" object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"policeDataRcvMsg" object:nil];
                 });
             }}] resume];
     }
@@ -278,7 +293,7 @@ website source for property class code  - https://www.michigan.gov/documents/tre
 api data displayed- https://data.detroitmi.gov/Property-Parcels/Property-Sales-History/w8m7-eib7
 api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 */
-- (void)getPropertyInfo {
+- (void)getPropertyInfo:(NSString *) proptype {
     //    NSLog(@"GPI");
     if (serverAvailable) {
         //NSLog(@"Server Available");
@@ -320,7 +335,8 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
                 }
                 NSLog(@"property records %li", _propertyArray.count);
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    //[[NSNotificationCenter defaultCenter] postNotificationName:@"propDataRcvMsg" object:nil];
+                    NSString *notificationname = [NSString stringWithFormat:@"%@DataRcvMsg",proptype];
+                    [[NSNotificationCenter defaultCenter] postNotificationName: notificationname object:nil];
                 });
             }}] resume];
     }
@@ -363,7 +379,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
                 NSLog(@"Fire Stations: %li", _fireArray.count);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"dataRcvMsg" object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"fireDataRcvMsg" object:nil];
                 });
             }}] resume];
     }
@@ -372,7 +388,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 
 #pragma mark - Liquor Store Data
 
-- (void)getLLInfo {
+- (void)getLLInfo:(NSString *)type {
     if (serverAvailable) {
         //NSLog(@"Server Available");
         NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/djd8-sm8q.json", _hostName]];
@@ -416,9 +432,9 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
                     }
                 }
                 NSLog(@"Strip Clubs %li, Liquor %li, Bars %li", _sClubArray.count,_lStoreArray.count, _barsArray.count);
-                
+                NSString *message = [NSString stringWithFormat:@"%@DataRcvMsg",type];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"dataRcvMsg" object:nil];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:message object:nil];
                 });
             }
         }
@@ -431,7 +447,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 //- (IBAction)getCrime:(id)sender {
 //    [self getCrimeInfo];
 //}
-- (void)getCrimeInfo {
+- (void)getCrimeInfo:(NSString *)type {
     if (serverAvailable) {
         //NSLog(@"Server Available");
         NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/i9ph-uyrp.json?$limit=10000&$$app_token=SiWSm0v7gKl8NxUd7vZCJQkzP", _hostName]];
@@ -470,7 +486,8 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
                 [_crimeArray removeObjectsInArray:discardedItems];
                 NSLog(@"total crimes %li", _crimeArray.count);
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    [[NSNotificationCenter defaultCenter] postNotificationName:@"dataRcvMsg" object:nil];
+                    NSString *message = [NSString stringWithFormat:@"%@DataRcvMsg",type];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:message object:nil];
                 });
             }
         }
@@ -522,6 +539,17 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 
 #pragma mark - Show/Hide Pin Commands
 
+-(void) checkPolice {
+    if (_policeArray.count == 0 || _policeArray == nil) {
+        NSLog(@"no data, pulling police data");
+        [self getPoliceInfo];
+    } else {
+        NSLog(@"have police data, showing police");
+        [self showPolice];
+    }
+}
+
+
 - (void) showPolice {
     if (policePinsOff){
         policePinsOff=false;
@@ -543,6 +571,15 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     }
 }
 
+-(void) checkFire {
+    if (_fireArray.count == 0 || _fireArray == nil) {
+        NSLog(@"no data, pulling fire data");
+        [self getFireInfo];
+    } else {
+        NSLog(@"have fire data, showing fire");
+        [self showFire];
+    }
+}
 
 - (void)showFire {
     if (firePinsOff){
@@ -551,6 +588,16 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     } else {
         [self removePinTypes:@"fire"];
         firePinsOff = true;
+    }
+}
+
+-(void) checkBars {
+    if (_lStoreArray.count == 0 || _lStoreArray == nil || _barsArray.count == 0 || _barsArray == nil || _sClubArray.count == 0 || _sClubArray == nil) {
+        NSLog(@"no data, pulling LL data");
+        [self getLLInfo:@"bar"];
+    } else {
+        NSLog(@"have bLL data, showing bars");
+        [self showBars];
     }
 }
 
@@ -565,6 +612,16 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     }
 }
 
+-(void) checkLStore {
+    if (_lStoreArray.count == 0 || _lStoreArray == nil || _barsArray.count == 0 || _barsArray == nil || _sClubArray.count == 0 || _sClubArray == nil) {
+        NSLog(@"no data, pulling LL data");
+        [self getLLInfo:@"lStore"];
+    } else {
+        NSLog(@"have bLL data, showing lStores");
+        [self showLStore];
+    }
+}
+
 - (void)showLStore {
     if (lStorePinsoff) {
         lStorePinsoff=false;
@@ -573,6 +630,16 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     } else {
         [self removePinTypes:@"lStore"];
         lStorePinsoff=true;
+    }
+}
+
+-(void) checkSClubs {
+    if (_lStoreArray.count == 0 || _lStoreArray == nil || _barsArray.count == 0 || _barsArray == nil || _sClubArray.count == 0 || _sClubArray == nil) {
+        NSLog(@"no data, pulling LL data");
+        [self getLLInfo:@"sClub"];
+    } else {
+        NSLog(@"have bLL data, showing sClubs");
+        [self showSClub];
     }
 }
 
@@ -587,6 +654,16 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     }
 }
 
+-(void) checkMurder {
+    if (_crimeArray.count == 0 || _crimeArray == nil) {
+        NSLog(@"no crime data, get crime data");
+        [self getCrimeInfo:@"murder"];
+    } else {
+        NSLog(@"yes crime data, display murder");
+        [self ShowMurder];
+    }
+}
+
 - (void)ShowMurder {
     if (murderPinsoOff) {
         murderPinsoOff=false;
@@ -596,6 +673,17 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         murderPinsoOff=true;
     }
 }
+
+-(void) checkDisorderly {
+    if (_crimeArray.count == 0 || _crimeArray == nil) {
+        NSLog(@"no crime data, get crime data");
+        [self getCrimeInfo:@"disorderly"];
+    } else {
+        NSLog(@"yes crime data, display disorderly");
+        [self ShowDisorderlyConduct];
+    }
+}
+
 - (void)ShowDisorderlyConduct {
     if (drunkPinsOff) {
         drunkPinsOff=false;
@@ -605,6 +693,17 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         drunkPinsOff=true;
     }
 }
+
+-(void) checkAssault {
+    if (_crimeArray.count == 0 || _crimeArray == nil) {
+        NSLog(@"no crime data, get crime data");
+        [self getCrimeInfo:@"assault"];
+    } else {
+        NSLog(@"yes crime data, display assault");
+        [self ShowAssault];
+    }
+}
+
 - (void)ShowAssault {
     if (assaultPinsOff) {
         assaultPinsOff=false;
@@ -612,6 +711,16 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     } else {
         [self removePinTypes:@"assault"];
         assaultPinsOff=true;
+    }
+}
+
+-(void) checkaggAssault {
+    if (_crimeArray.count == 0 || _crimeArray == nil) {
+        NSLog(@"no crime data, get crime data");
+        [self getCrimeInfo:@"aggAssault"];
+    } else {
+        NSLog(@"yes crime data, display aggAssault");
+        [self ShowAggAssault];
     }
 }
 
@@ -625,6 +734,16 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     }
 }
 
+-(void) checkArson {
+    if (_crimeArray.count == 0 || _crimeArray == nil) {
+        NSLog(@"no crime data, get crime data");
+        [self getCrimeInfo:@"arson"];
+    } else {
+        NSLog(@"yes crime data, display arson");
+        [self ShowArson];
+    }
+}
+
 - (void)ShowArson {
     if (arsonPinsOff) {
         arsonPinsOff=false;
@@ -632,6 +751,16 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     } else {
         [self removePinTypes:@"arson"];
         arsonPinsOff=true;
+    }
+}
+
+-(void)checkProperty0 {
+    if (_propertyArray.count == 0 || _propertyArray == nil) {
+        NSLog(@"no prop data, pulling prop data");
+        [self getPropertyInfo:(@"prop0")];
+    } else {
+        NSLog(@"found data, displaying prop0");
+        [self ShowProperty0];
     }
 }
 
@@ -646,6 +775,17 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         [self propertyLabelsOff];
     }
 }
+
+-(void)checkProperty1 {
+    if (_propertyArray.count == 0 || _propertyArray == nil) {
+        NSLog(@"no prop data, pulling prop data");
+        [self getPropertyInfo:(@"prop1")];
+    } else {
+        NSLog(@"found data, displaying prop1");
+        [self ShowProperty1];
+    }
+}
+
 -(void) ShowProperty1 {
     if (property1PinsOff) {
         property1PinsOff = false;
@@ -657,6 +797,17 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         [self propertyLabelsOff];
     }
 }
+
+-(void)checkProperty2 {
+    if (_propertyArray.count == 0 || _propertyArray == nil) {
+        NSLog(@"no prop data, pulling prop data");
+        [self getPropertyInfo:(@"prop2")];
+    } else {
+        NSLog(@"found data, displaying prop2");
+        [self ShowProperty2];
+    }
+}
+
 -(void) ShowProperty2 {
     if (property2PinsOff) {
         property2PinsOff = false;
@@ -669,6 +820,16 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     }
 }
 
+-(void)checkProperty3 {
+    if (_propertyArray.count == 0 || _propertyArray == nil) {
+        NSLog(@"no prop data, pulling prop data");
+        [self getPropertyInfo:(@"prop3")];
+    } else {
+        NSLog(@"found data, displaying prop3");
+        [self ShowProperty3];
+    }
+}
+
 -(void) ShowProperty3 {
     if (property3PinsOff) {
         property3PinsOff = false;
@@ -678,6 +839,16 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         property3PinsOff = true;
         [self removePinTypes:@"p3"];
         [self propertyLabelsOff];
+    }
+}
+
+-(void)checkProperty4 {
+    if (_propertyArray.count == 0 || _propertyArray == nil) {
+        NSLog(@"no prop data, pulling prop data");
+        [self getPropertyInfo:(@"prop4")];
+    } else {
+        NSLog(@"found data, displaying prop4");
+        [self ShowProperty4];
     }
 }
 
@@ -697,8 +868,8 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 
 -(void) propertyLabelsOn {
     [UIView animateWithDuration:0.5 animations:^{
-        [_lowMoneyLabel setAlpha:0.6];
-        [_highMoneyLabel setAlpha:0.6];
+        [_lowMoneyLabel setAlpha:0.8];
+        [_highMoneyLabel setAlpha:0.8];
         [_propertyPriceImageView setAlpha:1.0];
         [self.view layoutIfNeeded];
     }];
@@ -1120,22 +1291,22 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 }
 
 -(IBAction)refreshPressed:(id)sender {
-    if (_policeArray.count == 0 || _policeArray == nil) {
-        [self getPoliceInfo];
-    }
-    if (_propertyArray.count == 0 || _propertyArray == nil) {
-        [self getPropertyInfo];
-    }
+//    if (_policeArray.count == 0 || _policeArray == nil) {
+//        //[self getPoliceInfo];
+//    }
+//    if (_propertyArray.count == 0 || _propertyArray == nil) {
+//        [self getPropertyInfo];
+//    }
     
-    if (_crimeArray.count == 0 || _crimeArray == nil) {
-        [self getCrimeInfo];
-    }
-    if (_fireArray.count == 0 || _fireArray == nil) {
-        [self getFireInfo];
-    }
-    if (_lStoreArray.count == 0 || _lStoreArray == nil || _barsArray.count == 0 || _barsArray == nil || _sClubArray.count == 0 || _sClubArray == nil) {
-        [self getLLInfo];
-    }
+//    if (_crimeArray.count == 0 || _crimeArray == nil) {
+//        [self getCrimeInfo];
+//    }
+//    if (_fireArray.count == 0 || _fireArray == nil) {
+//        [self getFireInfo];
+//    }
+//    if (_lStoreArray.count == 0 || _lStoreArray == nil || _barsArray.count == 0 || _barsArray == nil || _sClubArray.count == 0 || _sClubArray == nil) {
+//        [self getLLInfo];
+//    }
 }
 
 -(void)reachablityChanged:(NSNotification *)notification {
@@ -1171,7 +1342,26 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     [super viewDidLoad];
     _hostName = @"data.detroitmi.gov";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachablityChanged:) name:kReachabilityChangedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(searchResultRecv:) name:@"propDataRcvMsg" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showPolice) name:@"policeDataRcvMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showFire) name:@"fireDataRcvMsg" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showBars) name:@"barDataRcvMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLStore) name:@"lStoreDataRcvMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSClub) name:@"sClubDataRcvMsg" object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowArson) name:@"arsonDataRcvMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowAssault) name:@"assaultDataRcvMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowAggAssault) name:@"aggAssaultDataRcvMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowDisorderlyConduct) name:@"disorderlyDataRcvMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowMurder) name:@"murderDataRcvMsg" object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowProperty0) name:@"prop0DataRcvMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowProperty1) name:@"prop1DataRcvMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowProperty2) name:@"prop2DataRcvMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowProperty3) name:@"prop3DataRcvMsg" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowProperty4) name:@"prop4DataRcvMsg" object:nil];
+    
     hostReach = [Reachability reachabilityWithHostname:_hostName];
     [hostReach startNotifier];
     
@@ -1202,10 +1392,10 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     
 
     _publicServicesArray = @[@"Police", @"Fire"];
-    _liquorTypeArray = @[@"Liquor Stores", @"Bars/Restaurants", @"Strip Clubs"];
+    _liquorTypeArray = @[@"Liquor Stores", @"Bars/Restaurants"]; //, @"Strip Clubs"];
     _crimeActsArray = @[@"Arson", @"Assault", @"Aggrevated Assault", @"Disorderly Conduct", @"Murder"];
     _publicServicesIconsArray = @[@"Police", @"Fire"];
-    _liquorTypeIconsArray = @[@"LiquorStores", @"BarsRestaurants", @"StripClubs"];
+    _liquorTypeIconsArray = @[@"LiquorStores", @"BarsRestaurants"]; //, @"StripClubs"];
     _crimeActsIconsArray = @[@"Arson", @"Assault", @"AggrevatedAssault", @"DisorderlyConduct", @"Murder"];
     _propertiesSoldArray = @[@"<$10k",@"<$30k",@"<$70k",@"<$125k",@"$125+"];
     _propertyIconsArray = @[@"Home",@"Home",@"Home",@"Home",@"Home"];
