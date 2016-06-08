@@ -144,6 +144,10 @@ bool property4PinsOff = true;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    CustomCollectionViewCell *cell = (CustomCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    [cell.activityIndicator startAnimating];
+    
     if (indexPath.section == 0){
         switch (indexPath.row) {
             case 0:
@@ -227,13 +231,10 @@ bool property4PinsOff = true;
     }
 }
 
-
-
-
 #pragma mark - Pull Police Data
 
 - (void)getPoliceInfo {
-//    NSLog(@"GPI");
+    //    NSLog(@"GPI");
     if (serverAvailable) {
         //NSLog(@"Server Available");
         NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/3n6r-g9kp.json?$$app_token=bjp8KrRvAPtuf809u1UXnI0Z8", _hostName]];
@@ -242,7 +243,7 @@ bool property4PinsOff = true;
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
         [request setTimeoutInterval:30.0];
         NSURLSession *session = [NSURLSession sharedSession];
-       // NSLog(@"URL searhing: %@",fileURL);
+        // NSLog(@"URL searhing: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             NSLog(@"Got Police Response");
             if (([data length] > 0) && (error == nil)) {
@@ -275,18 +276,14 @@ bool property4PinsOff = true;
 
 #pragma mark - Pull property Data
 /*
-website source for property class code  - https://www.michigan.gov/documents/treasury/STC_Recommended_Codes_351268_7.pdf
-api data displayed- https://data.detroitmi.gov/Property-Parcels/Property-Sales-History/w8m7-eib7
-api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
-*/
+ website source for property class code  - https://www.michigan.gov/documents/treasury/STC_Recommended_Codes_351268_7.pdf
+ api data displayed- https://data.detroitmi.gov/Property-Parcels/Property-Sales-History/w8m7-eib7
+ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
+ */
 - (void)getPropertyInfo:(NSString *) proptype {
     //    NSLog(@"GPI");
     if (serverAvailable) {
         //NSLog(@"Server Available");
-        
-        //NSString *searchtail = @"where=propclass%20in('401')";
-        //NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/fg2b-gvgp.json?$limit=10000&$$app_token=bjp8KrRvAPtuf809u1UXnI0Z8$%@", _hostName,searchtail]];
-        
         NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://goo.gl/YBS2Sn"]];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:fileURL];
@@ -302,7 +299,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
                 [_propertyArray removeAllObjects];
                 NSArray *tempArray = (NSArray *)json;
                 for (NSDictionary *property in tempArray) {
-
+                    
                     NSString *Address = [property objectForKey:@"propaddr"];
                     NSString *zip = [property objectForKey:@"propzip"];
                     NSString *price = [property objectForKey:@"saleprice"];
@@ -312,7 +309,6 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
                     NSString *propLon = [property objectForKey:@"longitude"];
                     if (price.integerValue >= 1) {
                         if ([propclass isEqualToString:@"401"] || [propclass isEqualToString:@"402"] || [propclass isEqualToString:@"403"] || [propclass isEqualToString:@"404"] || [propclass isEqualToString:@"407"] || [propclass isEqualToString:@"410"] || [propclass isEqualToString:@"411"] || [propclass isEqualToString:@"420"] || [propclass isEqualToString:@"451"] || [propclass isEqualToString:@"207"]){
-                            
                             Property *newProperty = [[Property alloc] initWithpropPrice:price andpropClass:propclass andpropAddress:Address andpropZip:zip andparcelNumber:parcelno andpropLat:propLat andpropLon:propLon];
                             
                             [_propertyArray addObject:newProperty];
@@ -332,7 +328,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 #pragma mark - Pull Fire Station Data
 
 - (void)getFireInfo {
-//    NSLog(@"GPI");
+    //    NSLog(@"GPI");
     if (serverAvailable) {
         //NSLog(@"Server Available");
         NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/hz79-58xh.json?$$app_token=bjp8KrRvAPtuf809u1UXnI0Z8", _hostName]];
@@ -383,7 +379,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
         [request setTimeoutInterval:30.0];
         NSURLSession *session = [NSURLSession sharedSession];
-//        NSLog(@"URL searching: %@",fileURL);
+        //        NSLog(@"URL searching: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             NSLog(@"Got LL Response");
             if (([data length] > 0) && (error == nil)) {
@@ -405,10 +401,9 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
                     NSString *zip = [store objectForKey:@"full_address_value_zip"];
                     NSString *active = [store objectForKey:@"active"];
                     //NSLog(@"permit - %@, name -  %@, lat:%@, lon:%@, street address %@, city %@, zip %@, active %@", permittype, name, lat, lon, street, city, zip, active);
-
+                    
                     BarsRestaurants *newstore = [[BarsRestaurants alloc] initWithName:name andpermitType:permittype andLat:lat andlon:lon andaddress:street andcity:city andzip:zip andactive:active];
                     if (lat == NULL) {
-                        //NSLog(@"toss these out");
                     } else if ([permittype containsString:@"TLESSACT"]) {
                         [_sClubArray addObject:newstore];
                     } else if ([permittype containsString:@"ADDBAR"] || [permittype containsString:@"FOOD"] || [name containsString:@"PUB"] || [permittype containsString:@"OD-SERV"] || [name containsString:@"RESTAURANT"] || [name containsString:@"LOUNGE"]) {                        [_barsArray addObject:newstore];
@@ -430,9 +425,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 
 #pragma mark - Crime info pull
 //https://data.detroitmi.gov/resource/i9ph-uyrp.json
-//- (IBAction)getCrime:(id)sender {
-//    [self getCrimeInfo];
-//}
+
 - (void)getCrimeInfo:(NSString *)type {
     if (serverAvailable) {
         //NSLog(@"Server Available");
@@ -522,6 +515,8 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     [_policeAreaSlider setAlpha:0.0];
     [_policeRadiusLabel setAlpha:0.0];
     
+    
+    
 }
 
 #pragma mark - Show/Hide Pin Commands
@@ -541,7 +536,6 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     if (policePinsOff){
         policePinsOff=false;
         [self annotatePoliceStationLocations];
-        
         [UIView animateWithDuration:0.5 animations:^{
             [_policeAreaSlider setAlpha:1.0];
             [_policeRadiusLabel setAlpha:0.8];
@@ -555,6 +549,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
             [_policeRadiusLabel setAlpha:0.0];
             [self.view layoutIfNeeded];
         }];
+        [self cancelAnnimationForRow:0 inSection:0];
     }
 }
 
@@ -575,6 +570,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     } else {
         [self removePinTypes:@"fire"];
         firePinsOff = true;
+        [self cancelAnnimationForRow:1 inSection:0];
     }
 }
 
@@ -591,11 +587,11 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 - (void)showBars {
     if (barPinsoff) {
         barPinsoff=false;
-        //[self annotateBarLocations];
         [self annotateLiquorLocations:_barsArray withCategory:@"bar"];
     } else {
         [self removePinTypes:@"bar"];
         barPinsoff = true;
+        [self cancelAnnimationForRow:1 inSection:1];
     }
 }
 
@@ -612,11 +608,11 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 - (void)showLStore {
     if (lStorePinsoff) {
         lStorePinsoff=false;
-        //[self annotateLStoreLocations];
         [self annotateLiquorLocations:_lStoreArray withCategory:@"lStore"];
     } else {
         [self removePinTypes:@"lStore"];
         lStorePinsoff=true;
+        [self cancelAnnimationForRow:0 inSection:1];
     }
 }
 
@@ -633,7 +629,6 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 - (void)showSClub {
     if (stripClubPinsOff) {
         stripClubPinsOff=false;
-        //[self annotateStripClubLocations];
         [self annotateLiquorLocations:_sClubArray withCategory:@"stripclub"];
     } else {
         [self removePinTypes:@"stripclub"];
@@ -658,6 +653,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     } else {
         [self removePinTypes:@"murder"];
         murderPinsoOff=true;
+        [self cancelAnnimationForRow:4 inSection:2];
     }
 }
 
@@ -678,6 +674,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     }else {
         [self removePinTypes:@"disorderlyconduct"];
         drunkPinsOff=true;
+        [self cancelAnnimationForRow:3 inSection:2];
     }
 }
 
@@ -698,6 +695,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     } else {
         [self removePinTypes:@"assault"];
         assaultPinsOff=true;
+        [self cancelAnnimationForRow:1 inSection:2];
     }
 }
 
@@ -718,6 +716,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     } else {
         [self removePinTypes:@"aggassault"];
         aggassaultPinsOff=true;
+        [self cancelAnnimationForRow:2 inSection:2];
     }
 }
 
@@ -738,6 +737,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     } else {
         [self removePinTypes:@"arson"];
         arsonPinsOff=true;
+        [self cancelAnnimationForRow:0 inSection:2];
     }
 }
 
@@ -760,6 +760,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         property0PinsOff = true;
         [self removePinTypes:@"p0"];
         [self propertyLabelsOff];
+        [self cancelAnnimationForRow:0 inSection:3];
     }
 }
 
@@ -782,6 +783,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         property1PinsOff = true;
         [self removePinTypes:@"p1"];
         [self propertyLabelsOff];
+        [self cancelAnnimationForRow:1 inSection:3];
     }
 }
 
@@ -804,6 +806,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         property2PinsOff = true;
         [self removePinTypes:@"p2"];
         [self propertyLabelsOff];
+        [self cancelAnnimationForRow:2 inSection:3];
     }
 }
 
@@ -826,6 +829,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         property3PinsOff = true;
         [self removePinTypes:@"p3"];
         [self propertyLabelsOff];
+        [self cancelAnnimationForRow:3 inSection:3];
     }
 }
 
@@ -848,6 +852,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         property4PinsOff = true;
         [self removePinTypes:@"p4"];
         [self propertyLabelsOff];
+        [self cancelAnnimationForRow:4 inSection:3];
     }
 }
 
@@ -861,6 +866,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         [self.view layoutIfNeeded];
     }];
 }
+
 -(void) propertyLabelsOff {
     if (property4PinsOff && property3PinsOff && property2PinsOff && property1PinsOff && property0PinsOff) {
         [UIView animateWithDuration:0.5 animations:^{
@@ -870,6 +876,18 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
             [self.view layoutIfNeeded];
         }];
     }
+}
+
+-(void) startAnnimationForRow:(int)row inSection:(int)section {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+    CustomCollectionViewCell *cell = (CustomCollectionViewCell *)[_menuCollectionView cellForItemAtIndexPath:indexPath];
+    [cell.activityIndicator startAnimating];
+}
+
+-(void) cancelAnnimationForRow:(int)row inSection:(int)section {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+    CustomCollectionViewCell *cell = (CustomCollectionViewCell *)[_menuCollectionView cellForItemAtIndexPath:indexPath];
+    [cell.activityIndicator stopAnimating];
 }
 
 - (void)zoomToPins {
@@ -977,27 +995,6 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         } else if ([annot.pinType isEqualToString:@"stripclub"]){
             pinView.pinTintColor = [UIColor purpleColor];
             pinView.alpha = 0.5;
-        }else if ([annot.pinType isEqualToString:@"assault"]){
-            pinView.pinTintColor = [UIColor cyanColor];
-            pinView.alpha = 0.5;
-        }else if ([annot.pinType isEqualToString:@"murder"]){
-            pinView.pinTintColor = [UIColor blackColor];
-            pinView.alpha = 0.5;
-        }else if ([annot.pinType isEqualToString:@"disorderlyconduct"]){
-            pinView.pinTintColor = [UIColor brownColor];
-            pinView.alpha = 0.5;
-        }else if ([annot.pinType isEqualToString:@"fire"]){
-            pinView.pinTintColor = [UIColor redColor];
-            pinView.alpha = 0.5;
-        }else if ([annot.pinType isEqualToString:@"arson"]){
-            pinView.pinTintColor = [UIColor yellowColor];
-            pinView.alpha = 0.5;
-        }else if ([annot.pinType isEqualToString:@"aggassault"]){
-            pinView.pinTintColor = [UIColor greenColor];
-            pinView.alpha = 0.5;
-        }else if ([annot.pinType isEqualToString:@"p0"]){
-            pinView.pinTintColor = [UIColor blackColor];
-            pinView.alpha = 0.5;
         }
         return pinView;
     }
@@ -1010,7 +1007,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         NSString *address = [NSString stringWithFormat:@"%@, Detroit, United States", prop.propAddress];
         CLGeocoder *geocoder = [[CLGeocoder alloc] init];
         [geocoder geocodeAddressString: address completionHandler:^(NSArray* placemarks, NSError* error){
-
+            
             for (CLPlacemark* aPlacemark in placemarks) {
                 prop.propLat = [NSString stringWithFormat:@"%.7f",aPlacemark.location.coordinate.latitude];
                 prop.propLon = [NSString stringWithFormat:@"%.7f",aPlacemark.location.coordinate.longitude];
@@ -1035,6 +1032,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         cirlce.circleType=@"police";
         [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
     }
+    [self cancelAnnimationForRow:0 inSection:0];
     [self zoomToPins];
 }
 
@@ -1065,11 +1063,13 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
         pa1.pinType = @"fire";
         [_mapView addAnnotation:pa1];
     }
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:0];
+    CustomCollectionViewCell *cell = (CustomCollectionViewCell *)[_menuCollectionView cellForItemAtIndexPath:indexPath];
+    [cell.activityIndicator stopAnimating];
     
     [self zoomToPins];
 }
 #pragma mark - Annotate Liquor Licenses methods
-
 
 - (void)annotateLiquorLocations:(NSMutableArray*)arrayName withCategory:(NSString*)category {
     for (BarsRestaurants*loc in arrayName) {
@@ -1085,68 +1085,78 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 #pragma mark - Annotate Property Methods
 
 - (void)annotatePropertyLocations {
+    [self startAnnimationForRow:0 inSection:3];
     for (Property *loc in _propertyArray) {
         if (loc.propPrice.intValue <= 10000) {
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.propLat floatValue], [loc.propLon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
-            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:100];
+            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:150];
             cirlce.circleType=@"p0";
             [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
+    [self cancelAnnimationForRow:0 inSection:3];
 }
 
 - (void)annotatePropertyLocations1 {
+    [self startAnnimationForRow:1 inSection:3];
     for (Property *loc in _propertyArray) {
         if (loc.propPrice.intValue >10000 && loc.propPrice.intValue <= 30000) {
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.propLat floatValue], [loc.propLon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
-            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:100];
+            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:150];
             cirlce.circleType=@"p1";
             [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
+    [self cancelAnnimationForRow:1 inSection:3];
 }
 
 - (void)annotatePropertyLocations2 {
+    [self startAnnimationForRow:2 inSection:3];
     for (Property *loc in _propertyArray) {
         if (loc.propPrice.intValue > 30000 && loc.propPrice.intValue <=70000) {
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.propLat floatValue], [loc.propLon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
-            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:100];
+            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:150];
             cirlce.circleType=@"p2";
             [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
+    [self cancelAnnimationForRow:2 inSection:3];
 }
 
 - (void)annotatePropertyLocations3 {
+    [self startAnnimationForRow:3 inSection:3];
     for (Property *loc in _propertyArray) {
         if (loc.propPrice.intValue >70000 && loc.propPrice.intValue <=125000) {
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.propLat floatValue], [loc.propLon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
-            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:100];
+            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:150];
             cirlce.circleType=@"p3";
             [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
+    [self cancelAnnimationForRow:3 inSection:3];
 }
 
 - (void)annotatePropertyLocations4 {
+    [self startAnnimationForRow:4 inSection:3];
     for (Property *loc in _propertyArray) {
         if (loc.propPrice.intValue >125000) {
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.propLat floatValue], [loc.propLon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
-            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:100];
+            MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:150];
             cirlce.circleType=@"p4";
             [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
+    [self cancelAnnimationForRow:4 inSection:3];
 }
 
 #pragma mark - Annotate Crime Methods
@@ -1157,85 +1167,72 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
-            pa1.title = loc.category;
-            pa1.subtitle = loc.date;
-            pa1.pinType = @"murder";
             MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:150];
             cirlce.circleType=@"murder";
             [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
-    [self zoomToPins];
+    [self cancelAnnimationForRow:4 inSection:2];
 }
 
 - (void)annotateDisorderlyConductLocations {
+    [self startAnnimationForRow:3 inSection:2];
     for (Crime *loc in _crimeArray) {
         if ([loc.crimeClass isEqualToString:@"53002"] || [loc.crimeClass isEqualToString:@"53001"]) {
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
-            pa1.title = loc.category;
-            pa1.subtitle = loc.date;
-            pa1.pinType = @"disorderlyconduct";
             MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:150];
             cirlce.circleType=@"disorderlyconduct";
             [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
-    [self zoomToPins];
+    [self cancelAnnimationForRow:3 inSection:2];
 }
 
-
-
 - (void)annotateAssaultLocations {
+    [self startAnnimationForRow:1 inSection:2];
     for (Crime *loc in _crimeArray) {
         if ([loc.crimeClass isEqualToString:@"13001"]) {
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
-            pa1.title = loc.category;
-            pa1.subtitle = loc.date;
-            pa1.pinType = @"assault";
             MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:150];
             cirlce.circleType=@"assault";
             [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
-    [self zoomToPins];
+    [self cancelAnnimationForRow:1 inSection:2];
 }
 
 - (void)annotateAGGAssaultLocations {
+    [self startAnnimationForRow:2 inSection:2];
     for (Crime *loc in _crimeArray) {
         if ([loc.crimeClass isEqualToString:@"13002"]) {
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
-            pa1.title = loc.category;
-            pa1.subtitle = loc.date;
-            pa1.pinType = @"aggassault";
             MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:150];
             cirlce.circleType=@"aggassault";
             [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
-    [self zoomToPins];
+    [self cancelAnnimationForRow:2 inSection:2];
 }
 
 - (void)annotateArsonLocations {
+    [self startAnnimationForRow:0 inSection:2];
     for (Crime *loc in _crimeArray) {
         if ([loc.crimeClass isEqualToString:@"20000"]) {
             CLLocationCoordinate2D coord = CLLocationCoordinate2DMake([loc.lat floatValue], [loc.lon floatValue]);
             MyPointAnnotation *pa1 = [[MyPointAnnotation alloc] init];
             pa1.coordinate = coord;
-            pa1.title = loc.category;
-            pa1.subtitle = loc.date;
-            pa1.pinType = @"arson";
             MyCircle *cirlce = [MyCircle circleWithCenterCoordinate:pa1.coordinate radius:150];
             cirlce.circleType=@"arson";
             [_mapView addOverlay:cirlce level:MKOverlayLevelAboveRoads];
         }
     }
-    [self zoomToPins];
+    [self cancelAnnimationForRow:0 inSection:2];
 }
 
 #pragma mark - Network Methods
@@ -1277,49 +1274,12 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     }
 }
 
--(IBAction)refreshPressed:(id)sender {
-//    if (_policeArray.count == 0 || _policeArray == nil) {
-//        //[self getPoliceInfo];
-//    }
-//    if (_propertyArray.count == 0 || _propertyArray == nil) {
-//        [self getPropertyInfo];
-//    }
-    
-//    if (_crimeArray.count == 0 || _crimeArray == nil) {
-//        [self getCrimeInfo];
-//    }
-//    if (_fireArray.count == 0 || _fireArray == nil) {
-//        [self getFireInfo];
-//    }
-//    if (_lStoreArray.count == 0 || _lStoreArray == nil || _barsArray.count == 0 || _barsArray == nil || _sClubArray.count == 0 || _sClubArray == nil) {
-//        [self getLLInfo];
-//    }
-}
-
 -(void)reachablityChanged:(NSNotification *)notification {
     Reachability *currentReach = [notification object];
     [self updateReachabilityStatus:currentReach];
-//    if (_policeArray.count == 0 || _policeArray == nil) {
-//        [self getPoliceInfo];
-//    }
-//    if (_propertyArray.count == 0 || _propertyArray == nil) {
-//        [self getPropertyInfo];
-//    }
-//
-//    if (_crimeArray.count == 0 || _crimeArray == nil) {
-//        [self getCrimeInfo];
-//    }
-//    if (_fireArray.count == 0 || _fireArray == nil) {
-//        [self getFireInfo];
-//    }
-//    if (_lStoreArray.count == 0 || _lStoreArray == nil || _barsArray.count == 0 || _barsArray == nil || _sClubArray.count == 0 || _sClubArray == nil) {
-//        [self getLLInfo];
-//    }
 }
 
 -(void)searchResultRecv:(NSNotification *)notification {
-    //NSLog(@"Reloading Table");
-    //   [_ResultsCollectionView reloadData];
     [self geocodeProperties];
 }
 
@@ -1336,7 +1296,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showBars) name:@"barDataRcvMsg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showLStore) name:@"lStoreDataRcvMsg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showSClub) name:@"sClubDataRcvMsg" object:nil];
-
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowArson) name:@"arsonDataRcvMsg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowAssault) name:@"assaultDataRcvMsg" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ShowAggAssault) name:@"aggAssaultDataRcvMsg" object:nil];
@@ -1377,7 +1337,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
     [_highMoneyLabel setAlpha:0.0];
     [_propertyPriceImageView setAlpha:0.0];
     
-
+    
     _publicServicesArray = @[@"Police", @"Fire"];
     _liquorTypeArray = @[@"Liquor Stores", @"Bars/Restaurants"]; //, @"Strip Clubs"];
     _crimeActsArray = @[@"Arson", @"Assault", @"Aggrevated Assault", @"Disorderly Conduct", @"Murder"];
