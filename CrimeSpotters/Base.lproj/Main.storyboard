@@ -115,6 +115,9 @@
                                                         <constraint firstAttribute="height" constant="40" id="fzQ-J2-hyD"/>
                                                     </constraints>
                                                 </imageView>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="gjg-rd-JQ0">
+                                                    <rect key="frame" x="12" y="10" width="37" height="37"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -127,6 +130,7 @@
                                             <constraint firstAttribute="topMargin" secondItem="dIO-um-MPo" secondAttribute="top" id="wLl-dh-n9q"/>
                                         </constraints>
                                         <connections>
+                                            <outlet property="activityIndicator" destination="gjg-rd-JQ0" id="bnw-T5-fXN"/>
                                             <outlet property="itemImageView" destination="dIO-um-MPo" id="e6P-y2-F05"/>
                                             <outlet property="itemLabel" destination="zZa-z3-ArG" id="3iY-29-pjL"/>
                                         </connections>

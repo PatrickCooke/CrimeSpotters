@@ -50,6 +50,7 @@
 @property (nonatomic, weak) IBOutlet  UIImageView       *propertyPriceImageView;
 
 
+
 @end
 
 @implementation ViewController
@@ -147,12 +148,10 @@ bool property4PinsOff = true;
         switch (indexPath.row) {
             case 0:
                 NSLog(@"Police");
-//                [self showPolice];
                 [self checkPolice];
                 break;
             case 1:
                 NSLog(@"Fire");
-//                [ self showFire];
                 [self checkFire];
                 break;
             default:
@@ -162,17 +161,14 @@ bool property4PinsOff = true;
         switch (indexPath.row) {
             case 0:
                 NSLog(@"Liquor Store");
-//                [self showLStore];
                 [self checkLStore];
                 break;
             case 1:
                 NSLog(@"Bars/Restaurants");
-//                [self showBars];
                 [self checkBars];
                 break;
             case 2:
                 NSLog(@"Strip Clubs");
-//                [self showSClub];
                 [self checkSClubs];
                 break;
             default:
@@ -182,27 +178,22 @@ bool property4PinsOff = true;
         switch (indexPath.row) {
             case 0:
                 NSLog(@"Arson");
-//                [self ShowArson];
                 [self checkArson];
                 break;
             case 1:
                 NSLog(@"Assault");
-//                [self ShowAssault];
                 [self checkAssault];
                 break;
             case 2:
                 NSLog(@"AggAssault");
-//                [self ShowAggAssault];
                 [self checkaggAssault];
                 break;
             case 3:
                 NSLog(@"Disorderly Conduct");
-//                [self ShowDisorderlyConduct];
                 [self checkDisorderly];
                 break;
             case 4:
                 NSLog(@"Murder");
-//                [self ShowMurder];
                 [self checkMurder];
                 break;
             default:
@@ -212,27 +203,22 @@ bool property4PinsOff = true;
         switch (indexPath.row) {
             case 0:
                 NSLog(@"prop0");
-//                [self ShowProperty0];
                 [self checkProperty0];
                 break;
             case 1:
                 NSLog(@"prop1");
-//                [self ShowProperty1];
                 [self checkProperty1];
                 break;
             case 2:
                 NSLog(@"prop2");
-//                [self ShowProperty2];
                 [self checkProperty2];
                 break;
             case 3:
                 NSLog(@"prop3");
-//                [self ShowProperty3];
                 [self checkProperty3];
                 break;
             case 4:
                 NSLog(@"prop4");
-//                [self ShowProperty4];
                 [self checkProperty4];
                 break;
             default:
@@ -497,6 +483,7 @@ api source data - https://dev.socrata.com/foundry/data.detroitmi.gov/fg2b-gvgp
 
 
 #pragma mark - Interactivity Button Methods
+
 
 -(IBAction)showHideMenu:(id)sender {
     if (menuvisable) {
