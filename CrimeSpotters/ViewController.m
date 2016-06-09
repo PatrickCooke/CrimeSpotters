@@ -265,7 +265,7 @@ bool property4PinsOff = true;
                     PoliceStations *newstation = [[PoliceStations alloc] initWithPAddress:address andCaptainName:captain andLatitude:lat andLongitude:lon andCity:city andState:state andPrecinct:precint];
                     [_policeArray addObject:newstation];
                 }
-                NSLog(@"Police records %li", _policeArray.count);
+                //NSLog(@"Police records %@", _policeArray.count);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"policeDataRcvMsg" object:nil];
@@ -315,7 +315,7 @@ bool property4PinsOff = true;
                         }
                     }
                 }
-                NSLog(@"property records %li", _propertyArray.count);
+                //NSLog(@"property records %li", _propertyArray.count);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSString *notificationname = [NSString stringWithFormat:@"%@DataRcvMsg",proptype];
                     [[NSNotificationCenter defaultCenter] postNotificationName: notificationname object:nil];
@@ -358,7 +358,7 @@ bool property4PinsOff = true;
                     FireStations *newstation = [[FireStations alloc] initWithStation:station andladder:Ladder andlat:lat andLon:lon andBattalion:battalion andEngine:engine];
                     [_fireArray addObject:newstation];
                 }
-                NSLog(@"Fire Stations: %li", _fireArray.count);
+               // NSLog(@"Fire Stations: %li", _fireArray.count);
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"fireDataRcvMsg" object:nil];
@@ -412,7 +412,7 @@ bool property4PinsOff = true;
                         [_lStoreArray addObject:newstore];
                     }
                 }
-                NSLog(@"Strip Clubs %li, Liquor %li, Bars %li", _sClubArray.count,_lStoreArray.count, _barsArray.count);
+                //NSLog(@"Strip Clubs %li, Liquor %li, Bars %li", _sClubArray.count,_lStoreArray.count, _barsArray.count);
                 NSString *message = [NSString stringWithFormat:@"%@DataRcvMsg",type];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [[NSNotificationCenter defaultCenter] postNotificationName:message object:nil];
@@ -463,7 +463,7 @@ bool property4PinsOff = true;
                 }
                 
                 [_crimeArray removeObjectsInArray:discardedItems];
-                NSLog(@"total crimes %li", _crimeArray.count);
+                //NSLog(@"total crimes %li", _crimeArray.count);
                 dispatch_async(dispatch_get_main_queue(), ^{
                     NSString *message = [NSString stringWithFormat:@"%@DataRcvMsg",type];
                     [[NSNotificationCenter defaultCenter] postNotificationName:message object:nil];
@@ -942,7 +942,7 @@ bool property4PinsOff = true;
         
         if ([currentCircle.circleType isEqualToString:@"police"]) {
             [renderer setFillColor:[UIColor blueColor]];
-            [renderer setAlpha:0.05];
+            [renderer setAlpha:0.1];
         } else if ([currentCircle.circleType isEqualToString: @"arson"]) {
             [renderer setFillColor:[UIColor redColor]];
             [renderer setAlpha:0.6];
@@ -1037,9 +1037,10 @@ bool property4PinsOff = true;
 }
 
 -(IBAction)sliderchanged:(UISlider *)slider {
-    int(policeArea) = (_policeAreaSlider.value * 6000);
-    NSLog(@"Slider Changed: %d, %f", policeArea, _policeAreaSlider.value);
-    _policeRadiusLabel.text = ([NSString stringWithFormat:@"Police Radius: %d m",policeArea ]);
+    float(policeArea) = (_policeAreaSlider.value * 6000);
+    float(miles) = (policeArea / 1609.344);
+    NSLog(@"Slider Changed: %f, %f", policeArea, _policeAreaSlider.value);
+    _policeRadiusLabel.text = ([NSString stringWithFormat:@"Police Radius: %1.2f mi",miles]);
     for (id<MKOverlay> annot in _mapView.overlays){
         if ([annot isKindOfClass:[MKCircle class]]) {
             MyCircle *overlay = (MyCircle *)annot;
@@ -1079,6 +1080,8 @@ bool property4PinsOff = true;
         pa1.pinType = category;
         [_mapView addAnnotation:pa1];
     }
+    [self cancelAnnimationForRow:0 inSection:1];
+    [self cancelAnnimationForRow:1 inSection:1];
     [self zoomToPins];
 }
 

@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--CrimeSpotters: Detroit-->
+        <!--iCitizen-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
@@ -33,12 +33,12 @@
                                     <action selector="sliderchanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="88y-jQ-uTh"/>
                                 </connections>
                             </slider>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Police Radius: 3000 m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xZJ-EI-yFl">
-                                <rect key="frame" x="20" y="517" width="180" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Police Radius: 1.87 mi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xZJ-EI-yFl">
+                                <rect key="frame" x="20" y="517" width="172" height="21"/>
                                 <color key="backgroundColor" red="0.95602115399999998" green="0.95132935110000005" blue="0.96210323949999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="XRB-WY-Pyb"/>
-                                    <constraint firstAttribute="width" constant="180" id="mNB-58-VpV"/>
+                                    <constraint firstAttribute="width" constant="172" id="mNB-58-VpV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="15"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -202,7 +202,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="CrimeSpotters: Detroit" id="PoV-Vz-d03">
+                    <navigationItem key="navigationItem" title="iCitizen" id="PoV-Vz-d03">
                         <barButtonItem key="leftBarButtonItem" title="Clear" id="wuP-Au-xyw">
                             <connections>
                                 <action selector="removePins:" destination="BYZ-38-t0r" id="trQ-y5-LUC"/>
