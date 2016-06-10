@@ -151,11 +151,11 @@ bool property4PinsOff = true;
     if (indexPath.section == 0){
         switch (indexPath.row) {
             case 0:
-                NSLog(@"Police");
+//                NSLog(@"Police");
                 [self checkPolice];
                 break;
             case 1:
-                NSLog(@"Fire");
+//                NSLog(@"Fire");
                 [self checkFire];
                 break;
             default:
@@ -164,15 +164,15 @@ bool property4PinsOff = true;
     } else if (indexPath.section == 1) {
         switch (indexPath.row) {
             case 0:
-                NSLog(@"Liquor Store");
+//                NSLog(@"Liquor Store");
                 [self checkLStore];
                 break;
             case 1:
-                NSLog(@"Bars/Restaurants");
+//                NSLog(@"Bars/Restaurants");
                 [self checkBars];
                 break;
             case 2:
-                NSLog(@"Strip Clubs");
+//                NSLog(@"Strip Clubs");
                 [self checkSClubs];
                 break;
             default:
@@ -181,23 +181,23 @@ bool property4PinsOff = true;
     } else if (indexPath.section == 2) {
         switch (indexPath.row) {
             case 0:
-                NSLog(@"Arson");
+//                NSLog(@"Arson");
                 [self checkArson];
                 break;
             case 1:
-                NSLog(@"Assault");
+//                NSLog(@"Assault");
                 [self checkAssault];
                 break;
             case 2:
-                NSLog(@"AggAssault");
+//                NSLog(@"AggAssault");
                 [self checkaggAssault];
                 break;
             case 3:
-                NSLog(@"Disorderly Conduct");
+//                NSLog(@"Disorderly Conduct");
                 [self checkDisorderly];
                 break;
             case 4:
-                NSLog(@"Murder");
+//                NSLog(@"Murder");
                 [self checkMurder];
                 break;
             default:
@@ -206,23 +206,23 @@ bool property4PinsOff = true;
     } else if (indexPath.section == 3) {
         switch (indexPath.row) {
             case 0:
-                NSLog(@"prop0");
+//                NSLog(@"prop0");
                 [self checkProperty0];
                 break;
             case 1:
-                NSLog(@"prop1");
+//                NSLog(@"prop1");
                 [self checkProperty1];
                 break;
             case 2:
-                NSLog(@"prop2");
+//                NSLog(@"prop2");
                 [self checkProperty2];
                 break;
             case 3:
-                NSLog(@"prop3");
+//                NSLog(@"prop3");
                 [self checkProperty3];
                 break;
             case 4:
-                NSLog(@"prop4");
+//                NSLog(@"prop4");
                 [self checkProperty4];
                 break;
             default:
@@ -234,9 +234,7 @@ bool property4PinsOff = true;
 #pragma mark - Pull Police Data
 
 - (void)getPoliceInfo {
-    //    NSLog(@"GPI");
     if (serverAvailable) {
-        //NSLog(@"Server Available");
         NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/3n6r-g9kp.json?$$app_token=bjp8KrRvAPtuf809u1UXnI0Z8", _hostName]];
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:fileURL];
@@ -245,7 +243,7 @@ bool property4PinsOff = true;
         NSURLSession *session = [NSURLSession sharedSession];
         // NSLog(@"URL searhing: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            NSLog(@"Got Police Response");
+//            NSLog(@"Got Police Response");
             if (([data length] > 0) && (error == nil)) {
                 NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 //NSLog(@"Got jSON %@", json);
@@ -292,7 +290,7 @@ bool property4PinsOff = true;
         NSURLSession *session = [NSURLSession sharedSession];
         // NSLog(@"URL searhing: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            NSLog(@"Got Property Response");
+//            NSLog(@"Got Property Response");
             if (([data length] > 0) && (error == nil)) {
                 NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 //NSLog(@"Got jSON %@", json);
@@ -339,7 +337,7 @@ bool property4PinsOff = true;
         NSURLSession *session = [NSURLSession sharedSession];
         //NSLog(@"URL searhing: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            NSLog(@"Got Fire Response");
+//            NSLog(@"Got Fire Response");
             if (([data length] > 0) && (error == nil)) {
                 NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 //NSLog(@"Got jSON %@", json);
@@ -381,7 +379,7 @@ bool property4PinsOff = true;
         NSURLSession *session = [NSURLSession sharedSession];
         //        NSLog(@"URL searching: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            NSLog(@"Got LL Response");
+//            NSLog(@"Got LL Response");
             if (([data length] > 0) && (error == nil)) {
                 NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 //NSLog(@"Got jSON %@", json);
@@ -437,7 +435,7 @@ bool property4PinsOff = true;
         NSURLSession *session = [NSURLSession sharedSession];
         //NSLog(@"URL searching: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-            NSLog(@"Got Crime Response");
+//            NSLog(@"Got Crime Response");
             if (([data length] > 0) && (error == nil)) {
                 NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
                 //NSLog(@"Got jSON %@", json);
@@ -514,19 +512,19 @@ bool property4PinsOff = true;
     [self removecircles];
     [_policeAreaSlider setAlpha:0.0];
     [_policeRadiusLabel setAlpha:0.0];
-    
-    
-    
+    [_lowMoneyLabel setAlpha: 0.0];
+    [_highMoneyLabel setAlpha:0.0];
+    [_propertyPriceImageView setAlpha:0.0];
 }
 
 #pragma mark - Show/Hide Pin Commands
 
 -(void) checkPolice {
     if (_policeArray.count == 0 || _policeArray == nil) {
-        NSLog(@"no data, pulling police data");
+//        NSLog(@"no data, pulling police data");
         [self getPoliceInfo];
     } else {
-        NSLog(@"have police data, showing police");
+//        NSLog(@"have police data, showing police");
         [self showPolice];
     }
 }
@@ -555,10 +553,10 @@ bool property4PinsOff = true;
 
 -(void) checkFire {
     if (_fireArray.count == 0 || _fireArray == nil) {
-        NSLog(@"no data, pulling fire data");
+//        NSLog(@"no data, pulling fire data");
         [self getFireInfo];
     } else {
-        NSLog(@"have fire data, showing fire");
+//        NSLog(@"have fire data, showing fire");
         [self showFire];
     }
 }
@@ -576,10 +574,10 @@ bool property4PinsOff = true;
 
 -(void) checkBars {
     if (_lStoreArray.count == 0 || _lStoreArray == nil || _barsArray.count == 0 || _barsArray == nil || _sClubArray.count == 0 || _sClubArray == nil) {
-        NSLog(@"no data, pulling LL data");
+//        NSLog(@"no data, pulling LL data");
         [self getLLInfo:@"bar"];
     } else {
-        NSLog(@"have bLL data, showing bars");
+//        NSLog(@"have bLL data, showing bars");
         [self showBars];
     }
 }
@@ -597,10 +595,10 @@ bool property4PinsOff = true;
 
 -(void) checkLStore {
     if (_lStoreArray.count == 0 || _lStoreArray == nil || _barsArray.count == 0 || _barsArray == nil || _sClubArray.count == 0 || _sClubArray == nil) {
-        NSLog(@"no data, pulling LL data");
+//        NSLog(@"no data, pulling LL data");
         [self getLLInfo:@"lStore"];
     } else {
-        NSLog(@"have bLL data, showing lStores");
+//        NSLog(@"have bLL data, showing lStores");
         [self showLStore];
     }
 }
@@ -618,10 +616,10 @@ bool property4PinsOff = true;
 
 -(void) checkSClubs {
     if (_lStoreArray.count == 0 || _lStoreArray == nil || _barsArray.count == 0 || _barsArray == nil || _sClubArray.count == 0 || _sClubArray == nil) {
-        NSLog(@"no data, pulling LL data");
+//        NSLog(@"no data, pulling LL data");
         [self getLLInfo:@"sClub"];
     } else {
-        NSLog(@"have bLL data, showing sClubs");
+//        NSLog(@"have bLL data, showing sClubs");
         [self showSClub];
     }
 }
@@ -638,10 +636,10 @@ bool property4PinsOff = true;
 
 -(void) checkMurder {
     if (_crimeArray.count == 0 || _crimeArray == nil) {
-        NSLog(@"no crime data, get crime data");
+//        NSLog(@"no crime data, get crime data");
         [self getCrimeInfo:@"murder"];
     } else {
-        NSLog(@"yes crime data, display murder");
+//        NSLog(@"yes crime data, display murder");
         [self ShowMurder];
     }
 }
@@ -659,10 +657,10 @@ bool property4PinsOff = true;
 
 -(void) checkDisorderly {
     if (_crimeArray.count == 0 || _crimeArray == nil) {
-        NSLog(@"no crime data, get crime data");
+//        NSLog(@"no crime data, get crime data");
         [self getCrimeInfo:@"disorderly"];
     } else {
-        NSLog(@"yes crime data, display disorderly");
+//        NSLog(@"yes crime data, display disorderly");
         [self ShowDisorderlyConduct];
     }
 }
@@ -680,10 +678,10 @@ bool property4PinsOff = true;
 
 -(void) checkAssault {
     if (_crimeArray.count == 0 || _crimeArray == nil) {
-        NSLog(@"no crime data, get crime data");
+//        NSLog(@"no crime data, get crime data");
         [self getCrimeInfo:@"assault"];
     } else {
-        NSLog(@"yes crime data, display assault");
+//        NSLog(@"yes crime data, display assault");
         [self ShowAssault];
     }
 }
@@ -701,10 +699,10 @@ bool property4PinsOff = true;
 
 -(void) checkaggAssault {
     if (_crimeArray.count == 0 || _crimeArray == nil) {
-        NSLog(@"no crime data, get crime data");
+//        NSLog(@"no crime data, get crime data");
         [self getCrimeInfo:@"aggAssault"];
     } else {
-        NSLog(@"yes crime data, display aggAssault");
+//        NSLog(@"yes crime data, display aggAssault");
         [self ShowAggAssault];
     }
 }
@@ -722,10 +720,10 @@ bool property4PinsOff = true;
 
 -(void) checkArson {
     if (_crimeArray.count == 0 || _crimeArray == nil) {
-        NSLog(@"no crime data, get crime data");
+//        NSLog(@"no crime data, get crime data");
         [self getCrimeInfo:@"arson"];
     } else {
-        NSLog(@"yes crime data, display arson");
+//        NSLog(@"yes crime data, display arson");
         [self ShowArson];
     }
 }
@@ -743,10 +741,10 @@ bool property4PinsOff = true;
 
 -(void)checkProperty0 {
     if (_propertyArray.count == 0 || _propertyArray == nil) {
-        NSLog(@"no prop data, pulling prop data");
+//        NSLog(@"no prop data, pulling prop data");
         [self getPropertyInfo:(@"prop0")];
     } else {
-        NSLog(@"found data, displaying prop0");
+//        NSLog(@"found data, displaying prop0");
         [self ShowProperty0];
     }
 }
@@ -766,10 +764,10 @@ bool property4PinsOff = true;
 
 -(void)checkProperty1 {
     if (_propertyArray.count == 0 || _propertyArray == nil) {
-        NSLog(@"no prop data, pulling prop data");
+//        NSLog(@"no prop data, pulling prop data");
         [self getPropertyInfo:(@"prop1")];
     } else {
-        NSLog(@"found data, displaying prop1");
+//        NSLog(@"found data, displaying prop1");
         [self ShowProperty1];
     }
 }
@@ -789,10 +787,10 @@ bool property4PinsOff = true;
 
 -(void)checkProperty2 {
     if (_propertyArray.count == 0 || _propertyArray == nil) {
-        NSLog(@"no prop data, pulling prop data");
+//        NSLog(@"no prop data, pulling prop data");
         [self getPropertyInfo:(@"prop2")];
     } else {
-        NSLog(@"found data, displaying prop2");
+//        NSLog(@"found data, displaying prop2");
         [self ShowProperty2];
     }
 }
@@ -812,10 +810,10 @@ bool property4PinsOff = true;
 
 -(void)checkProperty3 {
     if (_propertyArray.count == 0 || _propertyArray == nil) {
-        NSLog(@"no prop data, pulling prop data");
+        //NSLog(@"no prop data, pulling prop data");
         [self getPropertyInfo:(@"prop3")];
     } else {
-        NSLog(@"found data, displaying prop3");
+        //NSLog(@"found data, displaying prop3");
         [self ShowProperty3];
     }
 }
@@ -835,10 +833,10 @@ bool property4PinsOff = true;
 
 -(void)checkProperty4 {
     if (_propertyArray.count == 0 || _propertyArray == nil) {
-        NSLog(@"no prop data, pulling prop data");
+        //NSLog(@"no prop data, pulling prop data");
         [self getPropertyInfo:(@"prop4")];
     } else {
-        NSLog(@"found data, displaying prop4");
+        //NSLog(@"found data, displaying prop4");
         [self ShowProperty4];
     }
 }
@@ -1011,7 +1009,7 @@ bool property4PinsOff = true;
             for (CLPlacemark* aPlacemark in placemarks) {
                 prop.propLat = [NSString stringWithFormat:@"%.7f",aPlacemark.location.coordinate.latitude];
                 prop.propLon = [NSString stringWithFormat:@"%.7f",aPlacemark.location.coordinate.longitude];
-                NSLog(@"%@ coords %@,%@",prop.propAddress,prop.propLat, prop.propLon);
+                //NSLog(@"%@ coords %@,%@",prop.propAddress,prop.propLat, prop.propLon);
             }
         }];
     }
@@ -1039,7 +1037,7 @@ bool property4PinsOff = true;
 -(IBAction)sliderchanged:(UISlider *)slider {
     float(policeArea) = (_policeAreaSlider.value * 6000);
     float(miles) = (policeArea / 1609.344);
-    NSLog(@"Slider Changed: %f, %f", policeArea, _policeAreaSlider.value);
+    //NSLog(@"Slider Changed: %f, %f", policeArea, _policeAreaSlider.value);
     _policeRadiusLabel.text = ([NSString stringWithFormat:@"Police Radius: %1.2f mi",miles]);
     for (id<MKOverlay> annot in _mapView.overlays){
         if ([annot isKindOfClass:[MKCircle class]]) {
@@ -1246,14 +1244,14 @@ bool property4PinsOff = true;
     if (currentReach == hostReach) {
         switch (netStatus) {
             case NotReachable:
-                NSLog(@"Sever Not Available");
+//                NSLog(@"Sever Not Available");
                 serverAvailable = false;
                 break;
             case ReachableViaWWAN:
-                NSLog(@"Server Reachable via WWAN");
+//                NSLog(@"Server Reachable via WWAN");
                 serverAvailable = true;
             case ReachableViaWiFi:
-                NSLog(@"Server Reachable via WiFi");
+//                NSLog(@"Server Reachable via WiFi");
                 serverAvailable = true;
             default:
                 break;
@@ -1262,14 +1260,14 @@ bool property4PinsOff = true;
     if (currentReach == internetReach || currentReach == wifiReach) {
         switch (netStatus) {
             case NotReachable:
-                NSLog(@"Internet not Available");
+//                NSLog(@"Internet not Available");
                 internetAvailable = false;
                 break;
             case ReachableViaWWAN:
-                NSLog(@"Internet Available via WWAN");
+//                NSLog(@"Internet Available via WWAN");
                 internetAvailable = true;
             case ReachableViaWiFi:
-                NSLog(@"Internet Available via WiFi");
+//                NSLog(@"Internet Available via WiFi");
                 internetAvailable = true;
             default:
                 break;
@@ -1353,7 +1351,7 @@ bool property4PinsOff = true;
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    NSLog(@"out of memory");
+//    NSLog(@"out of memory");
 }
 
 @end
