@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--iCitizen-->
+        <!--InformedCity-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
@@ -202,7 +202,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="iCitizen" id="PoV-Vz-d03">
+                    <navigationItem key="navigationItem" title="InformedCity" id="PoV-Vz-d03">
                         <barButtonItem key="leftBarButtonItem" title="Clear" id="wuP-Au-xyw">
                             <connections>
                                 <action selector="removePins:" destination="BYZ-38-t0r" id="trQ-y5-LUC"/>

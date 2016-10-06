@@ -29,7 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		43171DB51CDBB65F0034021F /* CrimeSpotters.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CrimeSpotters.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		43171DB51CDBB65F0034021F /* InformedCity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InformedCity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43171DB91CDBB65F0034021F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		43171DBB1CDBB65F0034021F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		43171DBC1CDBB65F0034021F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -91,7 +91,7 @@
 		43171DB61CDBB65F0034021F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				43171DB51CDBB65F0034021F /* CrimeSpotters.app */,
+				43171DB51CDBB65F0034021F /* InformedCity.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -105,10 +105,10 @@
 				43171DBF1CDBB65F0034021F /* ViewController.m */,
 				43B0122E1D01F6B80084015F /* Collection View Assets */,
 				43171DC11CDBB65F0034021F /* Main.storyboard */,
+				43171DC61CDBB65F0034021F /* LaunchScreen.storyboard */,
 				43171DFC1CDEE50C0034021F /* data */,
 				43171DD11CDBB7470034021F /* Reachability.h */,
 				43171DD21CDBB7470034021F /* Reachability.m */,
-				43171DC61CDBB65F0034021F /* LaunchScreen.storyboard */,
 				43171DC91CDBB65F0034021F /* Info.plist */,
 				43171DFD1CDF86150034021F /* Assets.xcassets */,
 				43171DB81CDBB65F0034021F /* Supporting Files */,
@@ -161,9 +161,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		43171DB41CDBB65F0034021F /* CrimeSpotters */ = {
+		43171DB41CDBB65F0034021F /* InformedCity */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 43171DCC1CDBB65F0034021F /* Build configuration list for PBXNativeTarget "CrimeSpotters" */;
+			buildConfigurationList = 43171DCC1CDBB65F0034021F /* Build configuration list for PBXNativeTarget "InformedCity" */;
 			buildPhases = (
 				43171DB11CDBB65F0034021F /* Sources */,
 				43171DB21CDBB65F0034021F /* Frameworks */,
@@ -173,9 +173,9 @@
 			);
 			dependencies = (
 			);
-			name = CrimeSpotters;
+			name = InformedCity;
 			productName = CrimeSpotters;
-			productReference = 43171DB51CDBB65F0034021F /* CrimeSpotters.app */;
+			productReference = 43171DB51CDBB65F0034021F /* InformedCity.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -189,7 +189,7 @@
 				TargetAttributes = {
 					43171DB41CDBB65F0034021F = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = H56J2Z836K;
+						DevelopmentTeam = 6L9J2XXKYC;
 					};
 				};
 			};
@@ -206,7 +206,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				43171DB41CDBB65F0034021F /* CrimeSpotters */,
+				43171DB41CDBB65F0034021F /* InformedCity */,
 			);
 		};
 /* End PBXProject section */
@@ -359,7 +359,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CrimeSpotters/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thepatrickcooke.CrimeSpotters;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appsbypat.InformedCity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -371,7 +371,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = CrimeSpotters/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.thepatrickcooke.CrimeSpotters;
+				PRODUCT_BUNDLE_IDENTIFIER = com.appsbypat.InformedCity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -388,7 +388,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		43171DCC1CDBB65F0034021F /* Build configuration list for PBXNativeTarget "CrimeSpotters" */ = {
+		43171DCC1CDBB65F0034021F /* Build configuration list for PBXNativeTarget "InformedCity" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				43171DCD1CDBB65F0034021F /* Debug */,

@@ -18,19 +18,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CrimeSpotters" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pJ8-TC-uzs">
-                                <rect key="frame" x="189" y="179" width="222.5" height="42"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="InformedCity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pJ8-TC-uzs">
+                                <rect key="frame" x="201" y="179" width="199" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="M1y-Sq-pNu"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Using data from the Oportunty Project to discover Detroit" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BY9-g5-HoM">
-                                <rect key="frame" x="20" y="235" width="560" height="129"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Using data from the Oportunty Project to inform citizens " textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BY9-g5-HoM">
+                                <rect key="frame" x="51" y="235" width="498" height="129"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
@@ -39,8 +39,8 @@
                             <constraint firstItem="pJ8-TC-uzs" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="QhI-Tg-PDd"/>
                             <constraint firstItem="BY9-g5-HoM" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ThN-Hg-xTM"/>
                             <constraint firstItem="BY9-g5-HoM" firstAttribute="top" secondItem="pJ8-TC-uzs" secondAttribute="bottom" constant="14" id="WCT-6g-QtT"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="BY9-g5-HoM" secondAttribute="trailing" id="Yng-HY-4Z5"/>
-                            <constraint firstAttribute="leadingMargin" secondItem="BY9-g5-HoM" secondAttribute="leading" id="cDV-Oz-CFi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BY9-g5-HoM" secondAttribute="trailing" constant="31" id="Yng-HY-4Z5"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="BY9-g5-HoM" secondAttribute="leading" constant="-31" id="cDV-Oz-CFi"/>
                             <constraint firstItem="pJ8-TC-uzs" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="159" id="wf6-Wo-yct"/>
                         </constraints>
                     </view>

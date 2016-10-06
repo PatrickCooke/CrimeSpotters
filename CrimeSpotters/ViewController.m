@@ -235,27 +235,30 @@ bool property4PinsOff = true;
 
 - (void)getPoliceInfo {
     if (serverAvailable) {
-        NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/3n6r-g9kp.json?$$app_token=bjp8KrRvAPtuf809u1UXnI0Z8", _hostName]];
+        NSURL *fileURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@/resource/ddam-b64t.json?$$app_token=bjp8KrRvAPtuf809u1UXnI0Z8", _hostName]];
+//        NSLog(@"%@",fileURL);
         NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
         [request setURL:fileURL];
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
         [request setTimeoutInterval:30.0];
         NSURLSession *session = [NSURLSession sharedSession];
-        // NSLog(@"URL searhing: %@",fileURL);
+        NSLog(@"URL searhing: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 //            NSLog(@"Got Police Response");
             if (([data length] > 0) && (error == nil)) {
                 NSJSONSerialization *json = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:nil];
-                //NSLog(@"Got jSON %@", json);
+//                NSLog(@"Got jSON %@", json);
                 [_policeArray removeAllObjects];
                 NSArray *tempArray = (NSArray *)json;
                 for (NSDictionary *station in tempArray) {
                     NSString *address = [station objectForKey:@"address_1"];
                     NSString *captain = [station objectForKey:@"captain"];
-                    NSDictionary *coordDict = [station objectForKey:@"location"];
+                    /*NSDictionary *coordDict = [station objectForKey:@"location"];
                     NSArray *coords = [coordDict objectForKey:@"coordinates"];
                     NSString *lat = coords[1];
-                    NSString *lon = coords[0];
+                    NSString *lon = coords[0]; */
+                    NSString *lat = [station objectForKey:@"latitude"];
+                    NSString *lon = [station objectForKey:@"longitude"];
                     NSString *city = [station objectForKey:@"location_city"];
                     NSString *state = [station objectForKey:@"location_state"];
                     NSString *precint = [station objectForKey:@"precint"];
