@@ -996,7 +996,11 @@ bool property4PinsOff = true;
         } else if ([annot.pinType isEqualToString:@"stripclub"]){
             pinView.pinTintColor = [UIColor purpleColor];
             pinView.alpha = 0.5;
+        }else if ([annot.pinType isEqualToString:@"fire"]){
+            pinView.pinTintColor = [UIColor redColor];
+            pinView.alpha = 1.0;
         }
+
         return pinView;
     }
     return nil;
