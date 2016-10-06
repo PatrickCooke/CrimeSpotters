@@ -242,7 +242,7 @@ bool property4PinsOff = true;
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
         [request setTimeoutInterval:30.0];
         NSURLSession *session = [NSURLSession sharedSession];
-        NSLog(@"URL searhing: %@",fileURL);
+//        NSLog(@"URL searching: %@",fileURL);
         [[session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 //            NSLog(@"Got Police Response");
             if (([data length] > 0) && (error == nil)) {
